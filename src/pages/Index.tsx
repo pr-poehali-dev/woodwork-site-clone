@@ -21,49 +21,74 @@ const Index = () => {
 
   const services = [
     {
-      icon: "PaintBucket",
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/d0a5d561-b404-4d9e-a155-025dc94b915c.jpg",
       title: "Покраска деревянного дома",
       description: "Профессиональная покраска с использованием качественных материалов. Защита дерева от влаги, УФ-лучей и вредителей.",
     },
     {
-      icon: "Hammer",
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/3f7a468c-f693-41ae-9193-fd1e6e7b3764.jpg",
       title: "Шлифовка дома",
       description: "Тщательная шлифовка поверхностей перед покраской. Удаление старого покрытия, выравнивание структуры дерева.",
     },
     {
-      icon: "Flame",
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f18a09fc-92b3-4995-9d22-83f7814f4002.jpg",
       title: "Теплый шов",
       description: "Утепление межвенцовых швов современными материалами. Защита от продувания и теплопотерь.",
     },
     {
-      icon: "Square",
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/05692f6d-ff5f-4c33-89dc-a012f885bbb1.jpg",
       title: "Осада окон и дверей",
       description: "Профессиональная установка и отделка оконных и дверных проемов. Герметизация и утепление.",
     },
   ];
 
-  const advantages = [
-    { icon: "Award", title: "Опыт более 10 лет", description: "Выполнили более 200 проектов" },
-    { icon: "Shield", title: "Гарантия до 10 лет", description: "На все виды работ" },
-    { icon: "Users", title: "Профессиональная бригада", description: "Квалифицированные мастера" },
-    { icon: "CheckCircle", title: "Качественные материалы", description: "Только проверенные производители" },
+  const whyUs = [
+    { 
+      icon: "Award", 
+      title: "Опыт более 10 лет", 
+      description: "Выполнили более 200 проектов по всей Московской области" 
+    },
+    { 
+      icon: "Shield", 
+      title: "Гарантия до 10 лет", 
+      description: "Официальная гарантия на все виды работ и материалы" 
+    },
+    { 
+      icon: "Users", 
+      title: "Профессиональная бригада", 
+      description: "Квалифицированные мастера с многолетним опытом" 
+    },
+    { 
+      icon: "CheckCircle", 
+      title: "Качественные материалы", 
+      description: "Работаем только с проверенными европейскими производителями" 
+    },
   ];
 
   const portfolio = [
     {
-      image: "https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg",
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg",
       title: "Отделка дома из бруса",
+      area: "350 м²",
       location: "Московская область",
     },
     {
-      image: "https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg",
-      title: "Покраска фасада",
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/00310f5e-aa33-4b0e-b965-9f1b9ccc6ff8.jpg",
+      title: "Внутренняя отделка",
+      area: "280 м²",
+      location: "Подмосковье",
+    },
+    {
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg",
+      title: "Покраска сруба",
+      area: "420 м²",
       location: "Москва",
     },
     {
-      image: "https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg",
-      title: "Внутренняя отделка",
-      location: "Подмосковье",
+      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/551227cf-efd7-45c4-98b9-79c678eed3e3.jpg",
+      title: "Комплексная отделка",
+      area: "500 м²",
+      location: "Московская область",
     },
   ];
 
@@ -74,8 +99,9 @@ const Index = () => {
           <div className="text-2xl font-bold text-primary">Arte Madera</div>
           <div className="hidden md:flex gap-8 items-center">
             <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
-            <a href="#portfolio" className="hover:text-primary transition-colors">Портфолио</a>
-            <a href="#about" className="hover:text-primary transition-colors">О компании</a>
+            <a href="#why-us" className="hover:text-primary transition-colors">Преимущества</a>
+            <a href="#portfolio" className="hover:text-primary transition-colors">Проекты</a>
+            <a href="#about" className="hover:text-primary transition-colors">О нас</a>
             <a href="#contacts" className="hover:text-primary transition-colors">Контакты</a>
             <Button className="bg-primary hover:bg-accent">
               <Icon name="Phone" className="mr-2" size={18} />
@@ -91,15 +117,16 @@ const Index = () => {
       <section className="pt-24 pb-16 bg-gradient-to-b from-secondary to-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 animate-fade-in">
-              <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
-                Отделка деревянных домов в Москве и МО
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                Профессиональная отделка деревянных домов
               </h1>
               <p className="text-xl text-muted-foreground">
-                Профессиональная покраска, шлифовка и защита вашего дома. Гарантия до 10 лет.
+                Покраска, шлифовка, теплый шов и установка окон. Работаем в Москве и Московской области. Гарантия качества до 10 лет.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="bg-primary hover:bg-accent">
+                  <Icon name="Phone" className="mr-2" size={20} />
                   Получить консультацию
                 </Button>
                 <Button size="lg" variant="outline">
@@ -107,27 +134,50 @@ const Index = () => {
                   Рассчитать стоимость
                 </Button>
               </div>
-              <div className="flex flex-wrap gap-8 pt-4">
+              <div className="flex flex-wrap gap-6 pt-4">
                 <div className="flex items-center gap-2">
                   <Icon name="Award" className="text-primary" size={24} />
                   <span className="font-semibold">10+ лет опыта</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Icon name="Home" className="text-primary" size={24} />
-                  <span className="font-semibold">200+ домов</span>
+                  <span className="font-semibold">200+ проектов</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Icon name="Star" className="text-primary" size={24} />
+                  <Icon name="Shield" className="text-primary" size={24} />
                   <span className="font-semibold">Гарантия 10 лет</span>
                 </div>
               </div>
             </div>
-            <div className="relative animate-fade-in">
-              <img
-                src="https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg"
-                alt="Деревянный дом"
-                className="rounded-lg shadow-2xl w-full object-cover h-[500px]"
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
+                <img
+                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg"
+                  alt="Деревянный дом 1"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
+                <img
+                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/00310f5e-aa33-4b0e-b965-9f1b9ccc6ff8.jpg"
+                  alt="Деревянный дом 2"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
+                <img
+                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg"
+                  alt="Деревянный дом 3"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
+                <img
+                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/551227cf-efd7-45c4-98b9-79c678eed3e3.jpg"
+                  alt="Деревянный дом 4"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -145,17 +195,18 @@ const Index = () => {
             {services.map((service, index) => (
               <Card
                 key={index}
-                className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2"
+                className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2"
               >
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-48 object-cover"
+                />
                 <CardContent className="p-6 space-y-4">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Icon name={service.icon} className="text-primary" size={32} />
-                  </div>
                   <h3 className="text-xl font-bold">{service.title}</h3>
                   <p className="text-muted-foreground">{service.description}</p>
-                  <Button variant="link" className="p-0 h-auto text-primary">
+                  <Button className="w-full bg-primary hover:bg-accent">
                     Подробнее
-                    <Icon name="ArrowRight" className="ml-2" size={16} />
                   </Button>
                 </CardContent>
               </Card>
@@ -164,28 +215,59 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="portfolio" className="py-16 bg-secondary">
+      <section id="why-us" className="py-16 bg-secondary">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Наши работы</h2>
+            <h2 className="text-4xl font-bold mb-4">Почему выбирают нас</h2>
             <p className="text-xl text-muted-foreground">
-              Примеры выполненных проектов
+              Наши преимущества и гарантии качества
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {whyUs.map((item, index) => (
+              <Card key={index} className="text-center p-8 hover:shadow-lg transition-shadow">
+                <CardContent className="space-y-4 p-0">
+                  <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                    <Icon name={item.icon} className="text-primary" size={40} />
+                  </div>
+                  <h3 className="text-2xl font-bold">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Наши проекты</h2>
+            <p className="text-xl text-muted-foreground">
+              Примеры выполненных работ с гарантией качества
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {portfolio.map((project, index) => (
               <Card
                 key={index}
-                className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                className="overflow-hidden hover:shadow-xl transition-all duration-300 group"
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-64 object-cover"
-                />
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <div className="flex items-center text-muted-foreground">
+                <div className="relative overflow-hidden h-64">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <CardContent className="p-6 space-y-2">
+                  <h3 className="text-xl font-bold">{project.title}</h3>
+                  <div className="flex items-center text-muted-foreground text-sm">
+                    <Icon name="Home" size={16} className="mr-2" />
+                    {project.area}
+                  </div>
+                  <div className="flex items-center text-muted-foreground text-sm">
                     <Icon name="MapPin" size={16} className="mr-2" />
                     {project.location}
                   </div>
@@ -195,79 +277,62 @@ const Index = () => {
           </div>
           <div className="text-center mt-12">
             <Button size="lg" variant="outline" className="border-2">
-              Смотреть все работы
-              <Icon name="ArrowRight" className="ml-2" size={20} />
+              <Icon name="Images" className="mr-2" size={20} />
+              Смотреть все проекты
             </Button>
           </div>
         </div>
       </section>
 
-      <section id="about" className="py-16 bg-white">
+      <section id="about" className="py-16 bg-primary text-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Почему выбирают нас</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Arte Madera - это команда профессионалов с многолетним опытом в отделке деревянных домов
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {advantages.map((advantage, index) => (
-              <div key={index} className="text-center space-y-4 p-6">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                  <Icon name={advantage.icon} className="text-primary" size={40} />
-                </div>
-                <h3 className="text-xl font-bold">{advantage.title}</h3>
-                <p className="text-muted-foreground">{advantage.description}</p>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-6">Профессионалы деревянного домостроения</h2>
+              <div className="space-y-4 text-lg">
+                <p>
+                  <strong>Arte Madera</strong> — команда профессионалов с более чем 10-летним опытом в отделке деревянных домов. 
+                  Мы специализируемся на комплексной защите и декоративной отделке деревянных конструкций.
+                </p>
+                <p>
+                  За годы работы мы выполнили более 200 проектов в Москве и Московской области. Каждый дом для нас — это 
+                  не просто работа, а возможность создать уникальное пространство, которое будет служить десятилетиями.
+                </p>
+                <p>
+                  Мы используем только качественные европейские материалы и современное оборудование. На все работы 
+                  предоставляем официальную гарантию до 10 лет.
+                </p>
               </div>
-            ))}
+            </div>
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div>
+                <div className="text-5xl font-bold mb-2">10+</div>
+                <div className="text-lg opacity-90">лет на рынке</div>
+              </div>
+              <div>
+                <div className="text-5xl font-bold mb-2">200+</div>
+                <div className="text-lg opacity-90">выполненных проектов</div>
+              </div>
+              <div>
+                <div className="text-5xl font-bold mb-2">10</div>
+                <div className="text-lg opacity-90">лет гарантии</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="contacts" className="py-16 bg-gradient-to-b from-secondary to-white">
+      <section id="contacts" className="py-16 bg-secondary">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <h2 className="text-4xl font-bold">Свяжитесь с нами</h2>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-4">Свяжитесь с нами</h2>
               <p className="text-xl text-muted-foreground">
-                Оставьте заявку, и мы свяжемся с вами в течение 15 минут
+                Оставьте заявку и получите бесплатную консультацию
               </p>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Icon name="Phone" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <div className="font-semibold">Телефон</div>
-                    <a href="tel:+74951234567" className="text-primary hover:underline">
-                      +7 (495) 123-45-67
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Icon name="Mail" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <div className="font-semibold">Email</div>
-                    <a href="mailto:info@artemadera.ru" className="text-primary hover:underline">
-                      info@artemadera.ru
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Icon name="MapPin" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <div className="font-semibold">Адрес</div>
-                    <div className="text-muted-foreground">Москва и Московская область</div>
-                  </div>
-                </div>
-              </div>
             </div>
-            <Card className="shadow-lg">
-              <CardContent className="p-8">
+            <div className="grid md:grid-cols-2 gap-12">
+              <Card className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label className="block text-sm font-semibold mb-2">Ваше имя</label>
@@ -300,12 +365,55 @@ const Index = () => {
                   <Button type="submit" className="w-full bg-primary hover:bg-accent" size="lg">
                     Отправить заявку
                   </Button>
-                  <p className="text-xs text-muted-foreground text-center">
-                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-                  </p>
                 </form>
-              </CardContent>
-            </Card>
+              </Card>
+              <div className="space-y-8">
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="Phone" className="text-primary" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Телефон</h3>
+                    <a href="tel:+74951234567" className="text-muted-foreground hover:text-primary">
+                      +7 (495) 123-45-67
+                    </a>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="Mail" className="text-primary" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Email</h3>
+                    <a href="mailto:info@artemadera.ru" className="text-muted-foreground hover:text-primary">
+                      info@artemadera.ru
+                    </a>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="MapPin" className="text-primary" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Адрес</h3>
+                    <p className="text-muted-foreground">
+                      Москва и Московская область
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Icon name="Clock" className="text-primary" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Режим работы</h3>
+                    <p className="text-muted-foreground">
+                      Пн-Вс: 9:00 - 21:00
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -314,54 +422,27 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="text-2xl font-bold mb-4 text-white">Arte Madera</div>
+              <h3 className="text-2xl font-bold mb-4 text-primary">Arte Madera</h3>
               <p className="text-gray-300">
-                Профессиональная отделка деревянных домов в Москве и МО
+                Профессиональная отделка деревянных домов с гарантией качества
               </p>
             </div>
             <div>
               <h4 className="font-bold mb-4">Услуги</h4>
               <ul className="space-y-2 text-gray-300">
-                <li>
-                  <a href="#services" className="hover:text-white transition-colors">
-                    Покраска дома
-                  </a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-white transition-colors">
-                    Шлифовка дома
-                  </a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-white transition-colors">
-                    Теплый шов
-                  </a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-white transition-colors">
-                    Осада окон
-                  </a>
-                </li>
+                <li><a href="#services" className="hover:text-primary">Покраска дома</a></li>
+                <li><a href="#services" className="hover:text-primary">Шлифовка</a></li>
+                <li><a href="#services" className="hover:text-primary">Теплый шов</a></li>
+                <li><a href="#services" className="hover:text-primary">Установка окон</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-4">Компания</h4>
               <ul className="space-y-2 text-gray-300">
-                <li>
-                  <a href="#about" className="hover:text-white transition-colors">
-                    О нас
-                  </a>
-                </li>
-                <li>
-                  <a href="#portfolio" className="hover:text-white transition-colors">
-                    Портфолио
-                  </a>
-                </li>
-                <li>
-                  <a href="#contacts" className="hover:text-white transition-colors">
-                    Контакты
-                  </a>
-                </li>
+                <li><a href="#about" className="hover:text-primary">О нас</a></li>
+                <li><a href="#portfolio" className="hover:text-primary">Наши работы</a></li>
+                <li><a href="#why-us" className="hover:text-primary">Преимущества</a></li>
+                <li><a href="#contacts" className="hover:text-primary">Контакты</a></li>
               </ul>
             </div>
             <div>
@@ -374,7 +455,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-            <p>© 2024 Arte Madera. Все права защищены.</p>
+            <p>&copy; 2024 Arte Madera. Все права защищены.</p>
           </div>
         </div>
       </footer>
