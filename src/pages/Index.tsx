@@ -51,17 +51,17 @@ const Index = () => {
 
   const portfolio = [
     {
-      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/3e9c071d-8815-4524-bc2b-7cd595cdb5ce.jpg",
+      image: "https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg",
       title: "Отделка дома из бруса",
       location: "Московская область",
     },
     {
-      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/bb72d80f-a00a-453f-9475-7c1ef26bea0c.jpg",
+      image: "https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg",
       title: "Покраска фасада",
       location: "Москва",
     },
     {
-      image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/cbb4cfde-1658-4f4a-8616-69fcbfebd166.jpg",
+      image: "https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg",
       title: "Внутренняя отделка",
       location: "Подмосковье",
     },
@@ -124,7 +124,7 @@ const Index = () => {
             </div>
             <div className="relative animate-fade-in">
               <img
-                src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/3e9c071d-8815-4524-bc2b-7cd595cdb5ce.jpg"
+                src="https://cdn.poehali.dev/projects/6fcd73e5-b9b9-4906-9da8-8604cb9ca70f/files/515865e8-ceb9-4e97-8094-801f523116d8.jpg"
                 alt="Деревянный дом"
                 className="rounded-lg shadow-2xl w-full object-cover h-[500px]"
               />
