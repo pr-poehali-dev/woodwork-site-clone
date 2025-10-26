@@ -114,32 +114,111 @@ const Index = () => {
         </nav>
       </header>
 
-      <section className="pt-32 pb-20 bg-gradient-to-b from-secondary to-white min-h-[90vh] flex items-center">
+      <section className="pt-32 pb-20 bg-gradient-to-b from-secondary to-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl">
-            <div className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full mb-8">
-              <Icon name="Sparkles" size={20} />
-              <span className="font-semibold">Профессиональная отделка деревянных домов</span>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full mb-8">
+                <Icon name="Sparkles" size={20} />
+                <span className="font-semibold">Профессиональная отделка деревянных домов</span>
+              </div>
+              
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                <span className="text-foreground">Защита и красота вашего </span>
+                <span className="text-primary">деревянного дома</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-muted-foreground mb-8">
+                Покраска, шлифовка, теплый шов и осада для окон и дверей. Работаем с премиум материалами. Гарантия до 10 лет.
+              </p>
+              
+              <div className="flex flex-wrap gap-4 mb-12">
+                <Button size="lg" className="bg-primary hover:bg-accent text-lg px-8 py-6 h-auto">
+                  <Icon name="Phone" className="mr-2" size={22} />
+                  Получить консультацию
+                </Button>
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto border-2">
+                  <Icon name="Briefcase" className="mr-2" size={22} />
+                  Наши услуги
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex gap-4 items-start">
+                  <div className="bg-primary/10 p-4 rounded-2xl">
+                    <Icon name="Home" className="text-primary" size={32} />
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-primary mb-1">500+</div>
+                    <div className="text-muted-foreground">Домов защищено</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 items-start">
+                  <div className="bg-primary/10 p-4 rounded-2xl">
+                    <Icon name="Award" className="text-primary" size={32} />
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-primary mb-1">10 лет</div>
+                    <div className="text-muted-foreground">Опыта работы</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 items-start">
+                  <div className="bg-primary/10 p-4 rounded-2xl">
+                    <Icon name="ThumbsUp" className="text-primary" size={32} />
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-primary mb-1">98%</div>
+                    <div className="text-muted-foreground">Довольных клиентов</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 items-start">
+                  <div className="bg-primary/10 p-4 rounded-2xl">
+                    <Icon name="Headphones" className="text-primary" size={32} />
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-primary mb-1">24/7</div>
+                    <div className="text-muted-foreground">Поддержка</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-8">
-              <span className="text-foreground">Защита и красота вашего </span>
-              <span className="text-primary">деревянного дома</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl">
-              Покраска, шлифовка, теплый шов и осада для окон и дверей. Работаем с премиум материалами. Гарантия до 10 лет.
-            </p>
-            
-            <div className="flex flex-wrap gap-4 mb-12">
-              <Button size="lg" className="bg-primary hover:bg-accent text-lg px-8 py-6 h-auto">
-                <Icon name="Phone" className="mr-2" size={22} />
-                Получить консультацию
-              </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto border-2">
-                <Icon name="Briefcase" className="mr-2" size={22} />
-                Наши услуги
-              </Button>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-64">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg"
+                    alt="Деревянный дом 1"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-80">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg"
+                    alt="Деревянный дом 3"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+              </div>
+              <div className="space-y-4 pt-8">
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-80">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/00310f5e-aa33-4b0e-b965-9f1b9ccc6ff8.jpg"
+                    alt="Деревянный дом 2"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-64">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/551227cf-efd7-45c4-98b9-79c678eed3e3.jpg"
+                    alt="Деревянный дом 4"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
