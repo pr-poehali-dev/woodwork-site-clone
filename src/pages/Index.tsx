@@ -149,34 +149,38 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
-                <img
-                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg"
-                  alt="Деревянный дом 1"
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-64">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg"
+                    alt="Деревянный дом 1"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-80">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg"
+                    alt="Деревянный дом 3"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
               </div>
-              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
-                <img
-                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/00310f5e-aa33-4b0e-b965-9f1b9ccc6ff8.jpg"
-                  alt="Деревянный дом 2"
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
-                <img
-                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg"
-                  alt="Деревянный дом 3"
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div className="relative overflow-hidden rounded-lg shadow-lg h-48">
-                <img
-                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/551227cf-efd7-45c4-98b9-79c678eed3e3.jpg"
-                  alt="Деревянный дом 4"
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                />
+              <div className="space-y-4 pt-8">
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-80">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/00310f5e-aa33-4b0e-b965-9f1b9ccc6ff8.jpg"
+                    alt="Деревянный дом 2"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="relative overflow-hidden rounded-lg shadow-xl h-64">
+                  <img
+                    src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/551227cf-efd7-45c4-98b9-79c678eed3e3.jpg"
+                    alt="Деревянный дом 4"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
               </div>
             </div>
           </div>
