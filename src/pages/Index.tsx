@@ -54,26 +54,48 @@ const Index = () => {
     },
   ];
 
+  const whyUsSection = {
+    badge: "Наши преимущества",
+    title: "С нами надёжно и выгодно",
+    subtitle: "Более 500 довольных клиентов доверили нам свои деревянные дома. Мы гордимся качеством работы и репутацией."
+  };
+
   const whyUs = [
     { 
       icon: "Award", 
       title: "Опыт более 10 лет", 
-      description: "Выполнили более 200 проектов по всей Московской области" 
+      description: "Выполнили более 200 проектов по всей Московской области",
+      highlight: "200+ проектов"
     },
     { 
       icon: "Shield", 
       title: "Гарантия до 10 лет", 
-      description: "Официальная гарантия на все виды работ и материалы" 
+      description: "Официальная гарантия на все виды работ и материалы",
+      highlight: "10 лет гарантии"
     },
     { 
       icon: "Users", 
       title: "Профессиональная бригада", 
-      description: "Квалифицированные мастера с многолетним опытом" 
+      description: "Квалифицированные мастера с многолетним опытом",
+      highlight: "Сертифицированы"
     },
     { 
-      icon: "CheckCircle", 
-      title: "Качественные материалы", 
-      description: "Работаем только с проверенными европейскими производителями" 
+      icon: "Palette", 
+      title: "Премиум материалы", 
+      description: "Работаем только с проверенными европейскими производителями",
+      highlight: "Европа"
+    },
+    { 
+      icon: "Clock", 
+      title: "Точные сроки", 
+      description: "Строго соблюдаем договорные сроки выполнения работ",
+      highlight: "В срок"
+    },
+    { 
+      icon: "Wallet", 
+      title: "Прозрачное ценообразование", 
+      description: "Фиксированная цена в договоре, без скрытых доплат",
+      highlight: "Без доплат"
     },
   ];
 
@@ -419,48 +441,60 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="why-us" className="py-20 bg-gradient-to-b from-white to-secondary/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
-              <Icon name="Star" size={20} />
-              <span className="font-semibold">Наши преимущества</span>
+      <section id="why-us" className="py-24 bg-gradient-to-br from-white via-secondary/30 to-primary/5 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-accent rounded-full blur-3xl" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-accent text-white px-8 py-3 rounded-full mb-8 shadow-lg">
+              <Icon name="Star" size={22} />
+              <span className="font-bold text-base">{whyUsSection.badge}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Почему выбирают нас
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
+              {whyUsSection.title}
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Более 500 довольных клиентов доверили нам свои деревянные дома. 
-              Мы гордимся качеством работы и репутацией.
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              {whyUsSection.subtitle}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {whyUs.map((item, index) => (
               <Card 
                 key={index} 
-                className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/50"
+                className="group relative overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 hover:border-primary bg-white/80 backdrop-blur-sm"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500" />
+                <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full group-hover:scale-150 transition-transform duration-700" />
+                <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-gradient-to-tr from-accent/10 to-primary/10 rounded-full group-hover:scale-125 transition-transform duration-700" />
                 
-                <CardContent className="relative p-8 space-y-6">
-                  <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                    <Icon name={item.icon} className="text-white" size={36} />
+                <CardContent className="relative p-10 space-y-6">
+                  <div className="relative">
+                    <div className="w-24 h-24 bg-gradient-to-br from-primary via-primary to-accent rounded-3xl flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                      <Icon name={item.icon} className="text-white" size={40} />
+                    </div>
+                    <div className="absolute -top-2 -right-2 bg-accent text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                      {item.highlight}
+                    </div>
                   </div>
                   
-                  <div>
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                  <div className="space-y-3">
+                    <h3 className="text-2xl font-bold group-hover:text-primary transition-colors leading-tight">
                       {item.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed text-base">
                       {item.description}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-primary/10">
-                    <div className="flex items-center gap-2 text-primary font-semibold text-sm">
-                      <Icon name="CheckCircle" size={16} />
-                      <span>Подтверждено</span>
+                  <div className="pt-5 border-t-2 border-primary/20 group-hover:border-primary/40 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-primary/10 p-2 rounded-full group-hover:bg-primary/20 transition-colors">
+                        <Icon name="CheckCircle" className="text-primary" size={18} />
+                      </div>
+                      <span className="font-bold text-primary text-sm">Гарантировано</span>
                     </div>
                   </div>
                 </CardContent>
