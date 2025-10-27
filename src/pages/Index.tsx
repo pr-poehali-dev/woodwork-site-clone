@@ -212,25 +212,33 @@ const Index = () => {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="text-center">
-                  <div className="text-3xl mb-2">🏆</div>
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <Icon name="Award" className="text-primary" size={24} />
+                  </div>
                   <div className="text-2xl font-bold text-primary mb-1">500+</div>
                   <div className="text-xs text-muted-foreground">завершенных проектов</div>
                 </div>
 
                 <div className="text-center">
-                  <div className="text-3xl mb-2">⏱️</div>
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <Icon name="Clock" className="text-primary" size={24} />
+                  </div>
                   <div className="text-2xl font-bold text-primary mb-1">10 лет</div>
                   <div className="text-xs text-muted-foreground">на рынке</div>
                 </div>
 
                 <div className="text-center">
-                  <div className="text-3xl mb-2">⭐</div>
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <Icon name="Star" className="text-primary" size={24} />
+                  </div>
                   <div className="text-2xl font-bold text-primary mb-1">4.9</div>
                   <div className="text-xs text-muted-foreground">рейтинг Яндекс</div>
                 </div>
 
                 <div className="text-center">
-                  <div className="text-3xl mb-2">✅</div>
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <Icon name="ShieldCheck" className="text-primary" size={24} />
+                  </div>
                   <div className="text-2xl font-bold text-primary mb-1">до 10 лет</div>
                   <div className="text-xs text-muted-foreground">гарантия</div>
                 </div>
@@ -291,101 +299,74 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="space-y-16 max-w-7xl mx-auto">
+          <div className="space-y-12 max-w-7xl mx-auto">
             {services.map((service, index) => (
               <Card 
                 key={index}
                 className="overflow-hidden border-0 shadow-xl"
               >
-                <div className="grid lg:grid-cols-5 gap-0">
-                  <div className="lg:col-span-2 grid grid-cols-2 gap-1">
-                    <div className="relative h-64 overflow-hidden group">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-black/10" />
-                    </div>
-                    <div className="relative h-64 overflow-hidden group">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-black/10" />
-                    </div>
-                    <div className="relative h-64 overflow-hidden group">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-black/10" />
-                    </div>
-                    <div className="relative h-64 overflow-hidden group">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-black/10" />
-                      <div className="absolute top-4 right-4">
-                        <div className="w-14 h-14 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                          <Icon name={service.icon} className="text-primary" size={24} />
-                        </div>
+                <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-10">
+                  <div className="relative rounded-2xl overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover min-h-[400px]"
+                    />
+                    <div className="absolute top-6 left-6">
+                      <div className="w-16 h-16 rounded-2xl bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-xl">
+                        <Icon name={service.icon} className="text-primary" size={28} />
                       </div>
                     </div>
                   </div>
 
-                  <CardContent className="lg:col-span-3 p-8 lg:p-12 flex flex-col justify-center space-y-6">
+                  <div className="flex flex-col justify-center space-y-6">
                     <div className="space-y-4">
                       <h3 className="text-3xl lg:text-4xl font-bold leading-tight">
                         {service.title}
                       </h3>
                       
-                      <p className="text-lg text-muted-foreground leading-relaxed">
+                      <p className="text-xl text-muted-foreground leading-relaxed">
                         {service.description}
                       </p>
 
-                      <div className="grid sm:grid-cols-2 gap-3 pt-4">
+                      <div className="space-y-2 pt-4">
                         {service.features.map((feature, idx) => (
                           <div key={idx} className="flex items-start gap-3">
                             <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                               <Icon name="Check" className="text-primary" size={12} />
                             </div>
-                            <span className="text-sm text-muted-foreground">{feature}</span>
+                            <span className="text-base text-muted-foreground">{feature}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 pt-6 border-t">
-                      <div className="flex-1">
+                    <div className="space-y-4 pt-6 border-t">
+                      <div>
                         <span className="text-sm text-muted-foreground block mb-1">Стоимость работ</span>
                         <span className="text-3xl font-black text-primary">{service.price}</span>
                       </div>
                       
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-col sm:flex-row gap-3">
                         <Button 
                           size="lg"
-                          className="bg-gradient-to-r from-primary to-accent hover:shadow-xl transition-all"
+                          className="bg-gradient-to-r from-primary to-accent hover:shadow-xl transition-all text-base px-8 py-6 h-auto"
                           onClick={() => setShowCalculator(true)}
                         >
-                          <Icon name="Calculator" className="mr-2" size={18} />
+                          <Icon name="Calculator" className="mr-2" size={20} />
                           Рассчитать стоимость
                         </Button>
                         <Button 
                           size="lg"
                           variant="outline"
-                          className="border-2"
+                          className="border-2 text-base px-8 py-6 h-auto"
                         >
                           Узнать подробнее
-                          <Icon name="ArrowRight" className="ml-2" size={18} />
+                          <Icon name="ArrowRight" className="ml-2" size={20} />
                         </Button>
                       </div>
                     </div>
-                  </CardContent>
+                  </div>
                 </div>
               </Card>
             ))}
