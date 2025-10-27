@@ -301,83 +301,104 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-            <div className="space-y-6">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[400px] group">
-                <img
-                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg"
-                  alt="Деревянный дом"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute top-6 right-6">
-                  <div className="w-24 h-24 bg-primary/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl">
-                    <div className="text-center">
-                      <div className="text-3xl font-black text-white">10+</div>
-                      <div className="text-xs text-white/90 font-bold">лет опыта</div>
+          <div className="space-y-24">
+            {services.map((service, index) => (
+              <div 
+                key={index} 
+                className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}
+              >
+                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                  <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full">
+                    <Icon name={service.icon} size={18} />
+                    <span className="font-semibold text-sm">{service.price}</span>
+                  </div>
+                  
+                  <h3 className="text-4xl font-bold leading-tight">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  <div className="space-y-3 pt-4">
+                    {service.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-3">
+                        <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Icon name="Check" className="text-primary" size={14} />
+                        </div>
+                        <span className="text-base">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-4 pt-6">
+                    <Button 
+                      size="lg" 
+                      className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all"
+                      onClick={() => setShowCalculator(true)}
+                    >
+                      <Icon name="Calculator" className="mr-2" size={20} />
+                      Рассчитать стоимость
+                    </Button>
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      className="border-2 border-primary hover:bg-primary/5"
+                    >
+                      Узнать подробнее
+                      <Icon name="ArrowRight" className="ml-2" size={20} />
+                    </Button>
+                  </div>
+                </div>
+
+                <div className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-64 group">
+                        <img
+                          src={service.image}
+                          alt={`${service.title} 1`}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                      </div>
+                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-80 group">
+                        <img
+                          src={service.image}
+                          alt={`${service.title} 2`}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                      </div>
+                    </div>
+                    <div className="space-y-4 pt-8">
+                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-80 group">
+                        <img
+                          src={service.image}
+                          alt={`${service.title} 3`}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                        <div className="absolute top-4 right-4">
+                          <div className="w-16 h-16 bg-primary/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl">
+                            <Icon name={service.icon} className="text-white" size={28} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-64 group">
+                        <img
+                          src={service.image}
+                          alt={`${service.title} 4`}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[300px] group">
-                <img
-                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg"
-                  alt="Работы по дереву"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              </div>
-            </div>
-
-            <div className="space-y-8">
-              <div className="space-y-3">
-                <p className="text-muted-foreground leading-relaxed text-lg">
-                  Полный спектр услуг по отделке и защите деревянных домов. 
-                  Работаем с премиальными материалами и даём гарантию на все виды работ.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                {[
-                  { title: "Покраска деревянного дома", progress: 95, price: "от 450 ₽/м²" },
-                  { title: "Шлифовка бруса и бревна", progress: 90, price: "от 200 ₽/м²" },
-                  { title: "Теплый шов (герметизация)", progress: 88, price: "от 350 ₽/п.м" },
-                  { title: "Комплексная защита древесины", progress: 92, price: "от 800 ₽/м²" }
-                ].map((service, index) => (
-                  <div key={index} className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-bold">{service.title}</h3>
-                      <span className="text-2xl font-black text-primary">{service.progress}%</span>
-                    </div>
-                    <div className="relative h-3 bg-secondary rounded-full overflow-hidden">
-                      <div 
-                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-1000 ease-out"
-                        style={{ width: `${service.progress}%` }}
-                      />
-                      <div 
-                        className="absolute right-0 top-1/2 -translate-y-1/2 w-6 h-6 bg-accent rounded-full shadow-lg border-4 border-white transition-all duration-1000 ease-out"
-                        style={{ right: `${100 - service.progress}%` }}
-                      />
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">{service.price}</span>
-                      <Button size="sm" variant="ghost" className="text-primary font-semibold hover:bg-primary/10">
-                        Подробнее <Icon name="ArrowRight" className="ml-1" size={14} />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all"
-                onClick={() => setShowCalculator(true)}
-              >
-                <Icon name="Calculator" className="mr-2" size={20} />
-                Рассчитать стоимость
-              </Button>
-            </div>
+            ))}
           </div>
         </div>
       </section>
