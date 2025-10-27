@@ -301,104 +301,47 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="space-y-24">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {services.map((service, index) => (
-              <div 
-                key={index} 
-                className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}
+              <Card 
+                key={index}
+                className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white overflow-hidden"
               >
-                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                  <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full">
-                    <Icon name={service.icon} size={18} />
-                    <span className="font-semibold text-sm">{service.price}</span>
+                <CardContent className="p-8 space-y-6">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Icon name={service.icon} className="text-white" size={32} />
                   </div>
                   
-                  <h3 className="text-4xl font-bold leading-tight">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  <div className="space-y-3 pt-4">
-                    {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Icon name="Check" className="text-primary" size={14} />
-                        </div>
-                        <span className="text-base">{feature}</span>
-                      </div>
-                    ))}
+                  <div className="space-y-3">
+                    <h3 className="text-xl font-bold leading-tight">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-sm text-muted-foreground leading-relaxed min-h-[60px]">
+                      {service.description}
+                    </p>
                   </div>
 
-                  <div className="flex flex-wrap gap-4 pt-6">
-                    <Button 
-                      size="lg" 
-                      className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all"
-                      onClick={() => setShowCalculator(true)}
-                    >
-                      <Icon name="Calculator" className="mr-2" size={20} />
-                      Рассчитать стоимость
-                    </Button>
-                    <Button 
-                      size="lg" 
-                      variant="outline"
-                      className="border-2 border-primary hover:bg-primary/5"
-                    >
-                      Узнать подробнее
-                      <Icon name="ArrowRight" className="ml-2" size={20} />
-                    </Button>
-                  </div>
-                </div>
-
-                <div className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-4">
-                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-64 group">
-                        <img
-                          src={service.image}
-                          alt={`${service.title} 1`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                      </div>
-                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-80 group">
-                        <img
-                          src={service.image}
-                          alt={`${service.title} 2`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                      </div>
-                    </div>
-                    <div className="space-y-4 pt-8">
-                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-80 group">
-                        <img
-                          src={service.image}
-                          alt={`${service.title} 3`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                        <div className="absolute top-4 right-4">
-                          <div className="w-16 h-16 bg-primary/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl">
-                            <Icon name={service.icon} className="text-white" size={28} />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="relative rounded-2xl overflow-hidden shadow-xl h-64 group">
-                        <img
-                          src={service.image}
-                          alt={`${service.title} 4`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                      </div>
+                  <div className="pt-4 border-t space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground font-medium">Стоимость</span>
+                      <span className="text-lg font-black text-primary">{service.price}</span>
                     </div>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             ))}
+          </div>
+
+          <div className="text-center pt-12">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all text-lg px-8"
+              onClick={() => setShowCalculator(true)}
+            >
+              <Icon name="Calculator" className="mr-2" size={22} />
+              Рассчитать точную стоимость
+            </Button>
           </div>
         </div>
       </section>
