@@ -21,24 +21,36 @@ const Index = () => {
 
   const services = [
     {
+      icon: "Paintbrush",
       image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/d0a5d561-b404-4d9e-a155-025dc94b915c.jpg",
       title: "Покраска деревянного дома",
       description: "Профессиональная покраска с использованием качественных материалов. Защита дерева от влаги, УФ-лучей и вредителей.",
+      features: ["Премиум краски", "Многослойное покрытие", "Гарантия 10 лет"],
+      price: "от 450 ₽/м²"
     },
     {
+      icon: "Drill",
       image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/3f7a468c-f693-41ae-9193-fd1e6e7b3764.jpg",
       title: "Шлифовка дома",
       description: "Тщательная шлифовка поверхностей перед покраской. Удаление старого покрытия, выравнивание структуры дерева.",
+      features: ["Профессиональное оборудование", "Идеально гладкая поверхность", "Подготовка к покраске"],
+      price: "от 200 ₽/м²"
     },
     {
+      icon: "Thermometer",
       image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f18a09fc-92b3-4995-9d22-83f7814f4002.jpg",
       title: "Теплый шов",
       description: "Утепление межвенцовых швов современными материалами. Защита от продувания и теплопотерь.",
+      features: ["Экологичные материалы", "Защита от продувания", "Снижение теплопотерь"],
+      price: "от 350 ₽/п.м"
     },
     {
+      icon: "DoorOpen",
       image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/05692f6d-ff5f-4c33-89dc-a012f885bbb1.jpg",
       title: "Осада окон и дверей",
       description: "Профессиональная установка и отделка оконных и дверных проемов. Герметизация и утепление.",
+      features: ["Точная подгонка", "Герметизация", "Защита от сквозняков"],
+      price: "от 3500 ₽/проем"
     },
   ];
 
@@ -224,34 +236,84 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="services" className="py-16 bg-white">
+      <section id="services" className="py-20 bg-gradient-to-b from-white to-secondary/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Наши услуги</h2>
-            <p className="text-xl text-muted-foreground">
-              Полный комплекс работ по отделке деревянных домов
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="Briefcase" size={20} />
+              <span className="font-semibold">Наши услуги</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Комплексные решения для вашего дома
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Мы предлагаем полный спектр услуг по отделке и защите деревянных домов. 
+              Работаем с премиальными материалами и даём гарантию на все виды работ.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div className="grid md:grid-cols-2 gap-8">
             {services.map((service, index) => (
-              <Card
-                key={index}
-                className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2"
+              <Card 
+                key={index} 
+                className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50"
               >
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-48 object-cover"
-                />
-                <CardContent className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold">{service.title}</h3>
-                  <p className="text-muted-foreground">{service.description}</p>
-                  <Button className="w-full bg-primary hover:bg-accent">
-                    Подробнее
+                <div className="relative h-72 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2">
+                    <Icon name={service.icon} className="text-primary" size={20} />
+                    <span className="font-semibold text-sm">{service.price}</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    {service.description}
+                  </p>
+                  
+                  <div className="space-y-3 mb-6">
+                    {service.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <div className="bg-primary/10 p-1.5 rounded-full">
+                          <Icon name="Check" className="text-primary" size={16} />
+                        </div>
+                        <span className="text-sm font-medium">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button className="w-full bg-primary hover:bg-accent group-hover:shadow-lg transition-all">
+                    Заказать услугу
+                    <Icon name="ArrowRight" className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                   </Button>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <Card className="inline-block bg-gradient-to-r from-primary to-accent text-white p-8 shadow-xl">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="bg-white/20 p-4 rounded-full">
+                  <Icon name="Gift" size={40} />
+                </div>
+                <div className="text-left">
+                  <h3 className="text-2xl font-bold mb-2">Акция! Скидка 15% при заказе комплекса услуг</h3>
+                  <p className="text-white/90">Закажите шлифовку + покраску и получите выгоду до 50 000 ₽</p>
+                </div>
+                <Button size="lg" variant="secondary" className="whitespace-nowrap font-bold">
+                  Узнать подробнее
+                </Button>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
