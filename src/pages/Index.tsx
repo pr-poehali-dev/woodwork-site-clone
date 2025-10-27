@@ -1,15 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
 
 const Index = () => {
   const [formData, setFormData] = useState({
-    name: "",
     phone: "",
-    message: "",
   });
 
   const [calculatorData, setCalculatorData] = useState({
@@ -43,8 +40,8 @@ const Index = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
-    setFormData({ name: "", phone: "", message: "" });
+    alert("Спасибо! Мы перезвоним вам в течение 15 минут.");
+    setFormData({ phone: "" });
   };
 
   const services = [
@@ -304,68 +301,49 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
               <Card 
                 key={index} 
-                className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50"
+                className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50 bg-white"
               >
-                <div className="relative h-72 overflow-hidden">
+                <div className="relative h-48 overflow-hidden">
                   <img
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2">
-                    <Icon name={service.icon} className="text-primary" size={20} />
-                    <span className="font-semibold text-sm">{service.price}</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex items-center gap-2 text-white mb-2">
+                      <Icon name={service.icon} size={20} />
+                      <span className="font-bold text-lg">{service.title}</span>
+                    </div>
+                    <div className="text-white/90 text-sm font-semibold">{service.price}</div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                <CardContent className="p-5">
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-2">
                     {service.description}
                   </p>
                   
-                  <div className="space-y-3 mb-6">
-                    {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
-                        <div className="bg-primary/10 p-1.5 rounded-full">
-                          <Icon name="Check" className="text-primary" size={16} />
-                        </div>
-                        <span className="text-sm font-medium">{feature}</span>
+                  <div className="space-y-2 mb-4">
+                    {service.features.slice(0, 3).map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <Icon name="Check" className="text-primary flex-shrink-0" size={14} />
+                        <span className="text-xs">{feature}</span>
                       </div>
                     ))}
                   </div>
 
-                  <Button className="w-full bg-primary hover:bg-accent group-hover:shadow-lg transition-all">
-                    Заказать услугу
-                    <Icon name="ArrowRight" className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                  <Button size="sm" className="w-full bg-primary hover:bg-accent group-hover:shadow-lg transition-all">
+                    Заказать
+                    <Icon name="ArrowRight" className="ml-1 group-hover:translate-x-1 transition-transform" size={16} />
                   </Button>
                 </CardContent>
               </Card>
             ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <Card className="inline-block bg-gradient-to-r from-primary to-accent text-white p-8 shadow-xl">
-              <div className="flex flex-col md:flex-row items-center gap-6">
-                <div className="bg-white/20 p-4 rounded-full">
-                  <Icon name="Gift" size={40} />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-2xl font-bold mb-2">Акция! Скидка 15% при заказе комплекса услуг</h3>
-                  <p className="text-white/90">Закажите шлифовку + покраску и получите выгоду до 50 000 ₽</p>
-                </div>
-                <Button size="lg" variant="secondary" className="whitespace-nowrap font-bold">
-                  Узнать подробнее
-                </Button>
-              </div>
-            </Card>
           </div>
         </div>
       </section>
@@ -521,104 +499,30 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
-              <Icon name="Layers" size={20} />
-              <span className="font-semibold">Технология работы</span>
+              <Icon name="Handshake" size={20} />
+              <span className="font-semibold">Партнёры</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Как мы работаем
+              Наши партнёры
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Проверенная технология в 5 этапов — от консультации до гарантийного обслуживания
+              Работаем только с проверенными производителями материалов
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto">
-            <div className="space-y-8">
-              {[
-                {
-                  number: "01",
-                  icon: "Phone",
-                  title: "Консультация и выезд замерщика",
-                  description: "Бесплатный выезд специалиста на объект. Осмотр дома, консультация по материалам и технологиям. Составление предварительной сметы.",
-                  time: "1-2 дня"
-                },
-                {
-                  number: "02",
-                  icon: "FileText",
-                  title: "Составление договора",
-                  description: "Фиксированная цена в договоре, детальная смета работ. Прозрачные условия оплаты и график выполнения работ.",
-                  time: "1 день"
-                },
-                {
-                  number: "03",
-                  icon: "Hammer",
-                  title: "Подготовка поверхностей",
-                  description: "Шлифовка стен профессиональным оборудованием. Удаление старого покрытия, очистка от пыли и загрязнений. Обработка антисептиками.",
-                  time: "3-7 дней"
-                },
-                {
-                  number: "04",
-                  icon: "Paintbrush",
-                  title: "Основные работы",
-                  description: "Нанесение грунта и защитных составов. Покраска в 2-3 слоя с соблюдением технологии. Герметизация швов, осада проёмов.",
-                  time: "5-10 дней"
-                },
-                {
-                  number: "05",
-                  icon: "CheckCircle",
-                  title: "Сдача и гарантия",
-                  description: "Подписание акта выполненных работ. Выдача гарантийного талона до 10 лет. Консультации по уходу за покрытием.",
-                  time: "1 день"
-                }
-              ].map((step, index) => (
-                <Card key={index} className="relative overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50">
-                  <CardContent className="p-8">
-                    <div className="flex flex-col md:flex-row gap-6 items-start">
-                      <div className="flex-shrink-0">
-                        <div className="relative">
-                          <div className="text-7xl font-black text-primary/10 absolute -top-4 -left-2">
-                            {step.number}
-                          </div>
-                          <div className="relative w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
-                            <Icon name={step.icon} className="text-white" size={32} />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between gap-4 mb-3">
-                          <h3 className="text-2xl font-bold">{step.title}</h3>
-                          <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full whitespace-nowrap">
-                            <Icon name="Clock" size={16} className="text-primary" />
-                            <span className="text-sm font-semibold text-primary">{step.time}</span>
-                          </div>
-                        </div>
-                        <p className="text-muted-foreground leading-relaxed text-base">
-                          {step.description}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-gradient-to-b from-secondary/30 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
-              <Icon name="Palette" size={20} />
-              <span className="font-semibold">Материалы</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Работаем с лучшими европейскими брендами
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Используем только сертифицированные материалы с доказанной долговечностью
-            </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-12">
+            {[
+              { name: "Remmers", logo: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/logo-remmers.png" },
+              { name: "Zobel", logo: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/logo-zobel.png" },
+              { name: "Tikkurila", logo: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/logo-tikkurila.png" },
+              { name: "Sika", logo: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/logo-sika.png" }
+            ].map((partner, index) => (
+              <Card key={index} className="flex items-center justify-center p-6 hover:shadow-xl transition-all duration-300 bg-white">
+                <div className="w-full h-20 flex items-center justify-center">
+                  <div className="text-2xl font-bold text-muted-foreground">{partner.name}</div>
+                </div>
+              </Card>
+            ))}
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -714,47 +618,20 @@ const Index = () => {
 
             <Card className="p-8 md:p-12 shadow-2xl">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold flex items-center gap-2">
-                      <Icon name="User" size={16} className="text-primary" />
-                      Ваше имя
-                    </label>
-                    <Input
-                      placeholder="Иван Петров"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                      className="h-12 text-base"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold flex items-center gap-2">
-                      <Icon name="Phone" size={16} className="text-primary" />
-                      Телефон
-                    </label>
-                    <Input
-                      type="tel"
-                      placeholder="+7 (999) 123-45-67"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      required
-                      className="h-12 text-base"
-                    />
-                  </div>
-                </div>
-                
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold flex items-center gap-2">
-                    <Icon name="MessageSquare" size={16} className="text-primary" />
-                    Комментарий
+                  <label className="text-lg font-bold flex items-center gap-2">
+                    <Icon name="Phone" size={20} className="text-primary" />
+                    Ваш телефон
                   </label>
-                  <Textarea
-                    placeholder="Опишите вашу задачу: площадь дома, виды работ, сроки..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="min-h-[120px] text-base"
+                  <Input
+                    type="tel"
+                    placeholder="+7 (999) 123-45-67"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    required
+                    className="h-16 text-lg"
                   />
+                  <p className="text-sm text-muted-foreground">Укажите номер и мы перезвоним вам через 15 минут</p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
@@ -881,46 +758,92 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="portfolio" className="py-16 bg-white">
+      <section id="portfolio" className="py-20 bg-gradient-to-b from-white to-secondary/20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Наши проекты</h2>
-            <p className="text-xl text-muted-foreground">
-              Примеры выполненных работ с гарантией качества
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="Briefcase" size={20} />
+              <span className="font-semibold">Портфолио</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Наши проекты</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Более 500 завершённых проектов по всей Московской области
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {portfolio.map((project, index) => (
               <Card
                 key={index}
-                className="overflow-hidden hover:shadow-xl transition-all duration-300 group"
+                className="overflow-hidden hover:shadow-2xl transition-all duration-300 group border-2 hover:border-primary/50"
               >
-                <div className="relative overflow-hidden h-64">
+                <div className="relative overflow-hidden h-80">
                   <img
                     src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-white/90">
+                        <Icon name="Home" size={16} />
+                        <span className="text-sm">{project.area}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white/90">
+                        <Icon name="MapPin" size={16} />
+                        <span className="text-sm">{project.location}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <CardContent className="p-6 space-y-2">
-                  <h3 className="text-xl font-bold">{project.title}</h3>
-                  <div className="flex items-center text-muted-foreground text-sm">
-                    <Icon name="Home" size={16} className="mr-2" />
-                    {project.area}
-                  </div>
-                  <div className="flex items-center text-muted-foreground text-sm">
-                    <Icon name="MapPin" size={16} className="mr-2" />
-                    {project.location}
-                  </div>
-                </CardContent>
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="Images" size={20} />
+              <span className="font-semibold">Галерея работ</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Примеры наших работ</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Фото "до" и "после" — результаты говорят сами за себя
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg",
+              "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg",
+              "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/00310f5e-aa33-4b0e-b965-9f1b9ccc6ff8.jpg",
+              "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/551227cf-efd7-45c4-98b9-79c678eed3e3.jpg",
+              "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg",
+              "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg"
+            ].map((image, index) => (
+              <div key={index} className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer h-80">
+                <img
+                  src={image}
+                  alt={`Работа ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <div className="text-white">
+                    <Icon name="ZoomIn" size={32} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           <div className="text-center mt-12">
-            <Button size="lg" variant="outline" className="border-2">
+            <Button size="lg" variant="outline" className="border-2 border-primary">
               <Icon name="Images" className="mr-2" size={20} />
-              Смотреть все проекты
+              Посмотреть все фото
             </Button>
           </div>
         </div>
@@ -992,11 +915,28 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="mt-12 text-center">
-            <Button size="lg" variant="outline" className="border-2 border-primary">
-              <Icon name="ExternalLink" className="mr-2" size={20} />
-              Все отзывы на Яндекс.Картах
-            </Button>
+          <div className="mt-16">
+            <Card className="overflow-hidden border-2">
+              <CardContent className="p-0">
+                <div className="bg-gradient-to-r from-primary to-accent p-6 text-white">
+                  <div className="flex items-center gap-3">
+                    <Icon name="Star" className="fill-yellow-400 text-yellow-400" size={32} />
+                    <div>
+                      <h3 className="text-2xl font-bold">Отзывы на Яндекс.Картах</h3>
+                      <p className="text-white/90">Рейтинг 4.9 из 5 — более 150 отзывов</p>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ height: '500px', width: '100%' }}>
+                  <iframe 
+                    loading="lazy" 
+                    style={{ width: '100%', height: '100%', border: 'none' }}
+                    src="https://yandex.ru/maps-reviews-widget/45828270851?comments"
+                    title="Отзывы на Яндекс.Картах"
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -1066,6 +1006,85 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-20 bg-gradient-to-b from-white to-secondary/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="BookOpen" size={20} />
+              <span className="font-semibold">Блог</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Полезные статьи</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Экспертные советы по уходу и защите деревянного дома
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Как выбрать краску для деревянного дома",
+                excerpt: "Разбираемся в типах красок, их составе и особенностях применения для наружных работ.",
+                image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg",
+                date: "15 октября 2024",
+                category: "Материалы"
+              },
+              {
+                title: "Теплый шов: технология и преимущества",
+                excerpt: "Почему теплый шов необходим для деревянного дома и как правильно его выполнить.",
+                image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg",
+                date: "10 октября 2024",
+                category: "Технологии"
+              },
+              {
+                title: "7 ошибок при покраске сруба",
+                excerpt: "Типичные ошибки при покраске деревянного дома и как их избежать.",
+                image: "https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/00310f5e-aa33-4b0e-b965-9f1b9ccc6ff8.jpg",
+                date: "5 октября 2024",
+                category: "Советы"
+              }
+            ].map((article, index) => (
+              <Card key={index} className="overflow-hidden hover:shadow-2xl transition-all duration-300 group border-2 hover:border-primary/50 cursor-pointer">
+                <div className="relative overflow-hidden h-56">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                      {article.category}
+                    </div>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                    <Icon name="Calendar" size={14} />
+                    {article.date}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                    {article.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                    {article.excerpt}
+                  </p>
+                  <div className="flex items-center text-primary font-semibold group-hover:gap-3 transition-all">
+                    Читать далее
+                    <Icon name="ArrowRight" className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Button size="lg" variant="outline" className="border-2 border-primary">
+              <Icon name="BookOpen" className="mr-2" size={20} />
+              Все статьи блога
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <section id="about" className="py-16 bg-primary text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -1106,95 +1125,53 @@ const Index = () => {
 
       <section id="contacts" className="py-16 bg-secondary">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold mb-4">Свяжитесь с нами</h2>
               <p className="text-xl text-muted-foreground">
-                Оставьте заявку и получите бесплатную консультацию
+                Мы работаем ежедневно с 9:00 до 21:00
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-12">
-              <Card className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">Ваше имя</label>
-                    <Input
-                      placeholder="Иван Иванов"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">Телефон</label>
-                    <Input
-                      type="tel"
-                      placeholder="+7 (999) 123-45-67"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">Сообщение</label>
-                    <Textarea
-                      placeholder="Расскажите о вашем проекте..."
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    />
-                  </div>
-                  <Button type="submit" className="w-full bg-primary hover:bg-accent" size="lg">
-                    Отправить заявку
-                  </Button>
-                </form>
+            <div className="grid md:grid-cols-4 gap-8">
+              <Card className="p-6 text-center hover:shadow-xl transition-all">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="Phone" className="text-primary" size={28} />
+                </div>
+                <h3 className="font-bold text-lg mb-2">Телефон</h3>
+                <a href="tel:+74951234567" className="text-muted-foreground hover:text-primary text-lg font-semibold">
+                  +7 (495) 123-45-67
+                </a>
               </Card>
-              <div className="space-y-8">
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Icon name="Phone" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">Телефон</h3>
-                    <a href="tel:+74951234567" className="text-muted-foreground hover:text-primary">
-                      +7 (495) 123-45-67
-                    </a>
-                  </div>
+
+              <Card className="p-6 text-center hover:shadow-xl transition-all">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="Mail" className="text-primary" size={28} />
                 </div>
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Icon name="Mail" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">Email</h3>
-                    <a href="mailto:info@artemadera.ru" className="text-muted-foreground hover:text-primary">
-                      info@artemadera.ru
-                    </a>
-                  </div>
+                <h3 className="font-bold text-lg mb-2">Email</h3>
+                <a href="mailto:info@artemadera.ru" className="text-muted-foreground hover:text-primary font-semibold">
+                  info@artemadera.ru
+                </a>
+              </Card>
+
+              <Card className="p-6 text-center hover:shadow-xl transition-all">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="MapPin" className="text-primary" size={28} />
                 </div>
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Icon name="MapPin" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">Адрес</h3>
-                    <p className="text-muted-foreground">
-                      Москва и Московская область
-                    </p>
-                  </div>
+                <h3 className="font-bold text-lg mb-2">Адрес</h3>
+                <p className="text-muted-foreground font-semibold">
+                  Москва и МО
+                </p>
+              </Card>
+
+              <Card className="p-6 text-center hover:shadow-xl transition-all">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="Clock" className="text-primary" size={28} />
                 </div>
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Icon name="Clock" className="text-primary" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">Режим работы</h3>
-                    <p className="text-muted-foreground">
-                      Пн-Вс: 9:00 - 21:00
-                    </p>
-                  </div>
-                </div>
-              </div>
+                <h3 className="font-bold text-lg mb-2">Режим работы</h3>
+                <p className="text-muted-foreground font-semibold">
+                  Пн-Вс: 9:00 - 21:00
+                </p>
+              </Card>
             </div>
           </div>
         </div>
