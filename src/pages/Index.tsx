@@ -210,39 +210,29 @@ const Index = () => {
                 </Button>
               </div>
 
-              <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl p-6 border-2 border-primary/20">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center">
-                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 shadow-lg">
-                      <Icon name="Home" className="text-white" size={26} />
-                    </div>
-                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1">500+</div>
-                    <div className="text-xs md:text-sm font-bold text-foreground">Домов защищено</div>
-                  </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
+                  <div className="text-4xl mb-2">🏡</div>
+                  <div className="text-3xl font-black text-primary mb-1">250 000+</div>
+                  <div className="text-sm text-muted-foreground">м² обработано</div>
+                </div>
 
-                  <div className="text-center">
-                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-accent to-primary rounded-2xl mb-3 shadow-lg">
-                      <Icon name="Award" className="text-white" size={26} />
-                    </div>
-                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-1">10 лет</div>
-                    <div className="text-xs md:text-sm font-bold text-foreground">Опыта работы</div>
-                  </div>
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
+                  <div className="text-4xl mb-2">⏱️</div>
+                  <div className="text-3xl font-black text-accent mb-1">10 лет</div>
+                  <div className="text-sm text-muted-foreground">на рынке</div>
+                </div>
 
-                  <div className="text-center">
-                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 shadow-lg">
-                      <Icon name="Star" className="text-white" size={26} />
-                    </div>
-                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1">4.9</div>
-                    <div className="text-xs md:text-sm font-bold text-foreground">Рейтинг Яндекс</div>
-                  </div>
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
+                  <div className="text-4xl mb-2">⭐</div>
+                  <div className="text-3xl font-black text-primary mb-1">4.9</div>
+                  <div className="text-sm text-muted-foreground">рейтинг Яндекс</div>
+                </div>
 
-                  <div className="text-center">
-                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-accent to-primary rounded-2xl mb-3 shadow-lg">
-                      <Icon name="ThumbsUp" className="text-white" size={26} />
-                    </div>
-                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-1">98%</div>
-                    <div className="text-xs md:text-sm font-bold text-foreground">Рекомендуют</div>
-                  </div>
+                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
+                  <div className="text-4xl mb-2">✅</div>
+                  <div className="text-3xl font-black text-accent mb-1">до 10 лет</div>
+                  <div className="text-sm text-muted-foreground">гарантия</div>
                 </div>
               </div>
             </div>
