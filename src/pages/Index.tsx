@@ -166,57 +166,84 @@ const Index = () => {
                 Покраска, шлифовка, теплый шов и осада для окон и дверей. Работаем с премиум материалами. Гарантия до 10 лет.
               </p>
               
-              <div className="flex flex-wrap gap-4 mb-12">
-                <Button size="lg" className="bg-primary hover:bg-accent text-lg px-8 py-6 h-auto">
-                  <Icon name="Phone" className="mr-2" size={22} />
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl hover:scale-105 transition-all text-lg px-10 py-7 h-auto font-bold group"
+                >
+                  <Icon name="Phone" className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
                   Получить консультацию
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto border-2">
-                  <Icon name="Briefcase" className="mr-2" size={22} />
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg px-10 py-7 h-auto border-2 border-primary hover:bg-primary hover:text-white transition-all font-bold group"
+                >
+                  <Icon name="Briefcase" className="mr-3 group-hover:scale-110 transition-transform" size={24} />
                   Наши услуги
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="Home" className="text-primary" size={32} />
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">500+</div>
-                    <div className="text-muted-foreground">Домов защищено</div>
-                  </div>
-                </div>
+              <div className="grid grid-cols-2 gap-4">
+                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-primary/50 bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-primary/5 rounded-full" />
+                    <div className="relative flex items-center gap-4">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+                        <Icon name="Home" className="text-white" size={28} />
+                      </div>
+                      <div>
+                        <div className="text-4xl font-black text-primary mb-1">500+</div>
+                        <div className="text-sm font-semibold text-muted-foreground">Домов защищено</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="Award" className="text-primary" size={32} />
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">10 лет</div>
-                    <div className="text-muted-foreground">Опыта работы</div>
-                  </div>
-                </div>
+                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-accent/50 bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-accent/5 rounded-full" />
+                    <div className="relative flex items-center gap-4">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-2xl flex items-center justify-center shadow-lg">
+                        <Icon name="Award" className="text-white" size={28} />
+                      </div>
+                      <div>
+                        <div className="text-4xl font-black text-accent mb-1">10 лет</div>
+                        <div className="text-sm font-semibold text-muted-foreground">Опыта работы</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="ThumbsUp" className="text-primary" size={32} />
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">98%</div>
-                    <div className="text-muted-foreground">Довольных клиентов</div>
-                  </div>
-                </div>
+                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-primary/50 bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-primary/5 rounded-full" />
+                    <div className="relative flex items-center gap-4">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+                        <Icon name="ThumbsUp" className="text-white" size={28} />
+                      </div>
+                      <div>
+                        <div className="text-4xl font-black text-primary mb-1">98%</div>
+                        <div className="text-sm font-semibold text-muted-foreground">Довольных клиентов</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="Headphones" className="text-primary" size={32} />
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">24/7</div>
-                    <div className="text-muted-foreground">Поддержка</div>
-                  </div>
-                </div>
+                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-accent/50 bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-accent/5 rounded-full" />
+                    <div className="relative flex items-center gap-4">
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-2xl flex items-center justify-center shadow-lg">
+                        <Icon name="Headphones" className="text-white" size={28} />
+                      </div>
+                      <div>
+                        <div className="text-4xl font-black text-accent mb-1">24/7</div>
+                        <div className="text-sm font-semibold text-muted-foreground">Поддержка</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
 
