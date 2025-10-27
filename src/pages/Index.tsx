@@ -210,29 +210,29 @@ const Index = () => {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
-                  <div className="text-4xl mb-2">🏡</div>
-                  <div className="text-3xl font-black text-primary mb-1">250 000+</div>
-                  <div className="text-sm text-muted-foreground">м² обработано</div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="text-center">
+                  <div className="text-3xl mb-2">🏆</div>
+                  <div className="text-2xl font-bold text-primary mb-1">500+</div>
+                  <div className="text-xs text-muted-foreground">завершенных проектов</div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
-                  <div className="text-4xl mb-2">⏱️</div>
-                  <div className="text-3xl font-black text-accent mb-1">10 лет</div>
-                  <div className="text-sm text-muted-foreground">на рынке</div>
+                <div className="text-center">
+                  <div className="text-3xl mb-2">⏱️</div>
+                  <div className="text-2xl font-bold text-primary mb-1">10 лет</div>
+                  <div className="text-xs text-muted-foreground">на рынке</div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
-                  <div className="text-4xl mb-2">⭐</div>
-                  <div className="text-3xl font-black text-primary mb-1">4.9</div>
-                  <div className="text-sm text-muted-foreground">рейтинг Яндекс</div>
+                <div className="text-center">
+                  <div className="text-3xl mb-2">⭐</div>
+                  <div className="text-2xl font-bold text-primary mb-1">4.9</div>
+                  <div className="text-xs text-muted-foreground">рейтинг Яндекс</div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-gray-100">
-                  <div className="text-4xl mb-2">✅</div>
-                  <div className="text-3xl font-black text-accent mb-1">до 10 лет</div>
-                  <div className="text-sm text-muted-foreground">гарантия</div>
+                <div className="text-center">
+                  <div className="text-3xl mb-2">✅</div>
+                  <div className="text-2xl font-bold text-primary mb-1">до 10 лет</div>
+                  <div className="text-xs text-muted-foreground">гарантия</div>
                 </div>
               </div>
             </div>
