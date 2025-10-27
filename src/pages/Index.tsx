@@ -283,7 +283,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="services" className="py-20 bg-gradient-to-b from-white to-secondary/30">
+      <section id="services" className="py-20 bg-gradient-to-b from-secondary/20 via-white to-secondary/20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
@@ -303,7 +303,7 @@ const Index = () => {
             {services.map((service, index) => (
               <Card 
                 key={index}
-                className="overflow-hidden border-0 shadow-xl"
+                className="overflow-hidden border-0 shadow-2xl bg-white hover:shadow-3xl transition-shadow"
               >
                 <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-10">
                   <div className="relative rounded-2xl overflow-hidden">
