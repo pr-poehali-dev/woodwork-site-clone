@@ -318,26 +318,180 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="why-us" className="py-16 bg-secondary">
+      <section className="py-20 bg-gradient-to-br from-primary via-accent to-primary relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-white/20 text-white px-6 py-3 rounded-full mb-6 backdrop-blur-sm">
+                <Icon name="Sparkles" size={20} />
+                <span className="font-semibold">Бесплатная консультация</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Получите расчёт стоимости за 15 минут
+              </h2>
+              <p className="text-xl text-white/90">
+                Оставьте заявку и получите бесплатный выезд специалиста для осмотра объекта
+              </p>
+            </div>
+
+            <Card className="p-8 md:p-12 shadow-2xl">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold flex items-center gap-2">
+                      <Icon name="User" size={16} className="text-primary" />
+                      Ваше имя
+                    </label>
+                    <Input
+                      placeholder="Иван Петров"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                      className="h-12 text-base"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold flex items-center gap-2">
+                      <Icon name="Phone" size={16} className="text-primary" />
+                      Телефон
+                    </label>
+                    <Input
+                      type="tel"
+                      placeholder="+7 (999) 123-45-67"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      required
+                      className="h-12 text-base"
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold flex items-center gap-2">
+                    <Icon name="MessageSquare" size={16} className="text-primary" />
+                    Комментарий
+                  </label>
+                  <Textarea
+                    placeholder="Опишите вашу задачу: площадь дома, виды работ, сроки..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="min-h-[120px] text-base"
+                  />
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full sm:w-auto bg-primary hover:bg-accent text-lg px-12 py-6 h-auto shadow-lg"
+                  >
+                    <Icon name="Send" className="mr-2" size={20} />
+                    Получить расчёт
+                  </Button>
+                  <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <Icon name="Shield" size={16} className="text-primary mt-0.5 flex-shrink-0" />
+                    <span>Мы не передаём ваши данные третьим лицам</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-4 pt-6 border-t">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary mb-1">15 мин</div>
+                    <div className="text-sm text-muted-foreground">Время ответа</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary mb-1">Бесплатно</div>
+                    <div className="text-sm text-muted-foreground">Выезд и замер</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-primary mb-1">3 года</div>
+                    <div className="text-sm text-muted-foreground">Гарантия</div>
+                  </div>
+                </div>
+              </form>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section id="why-us" className="py-20 bg-gradient-to-b from-white to-secondary/50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Почему выбирают нас</h2>
-            <p className="text-xl text-muted-foreground">
-              Наши преимущества и гарантии качества
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="Star" size={20} />
+              <span className="font-semibold">Наши преимущества</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Почему выбирают нас
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Более 500 довольных клиентов доверили нам свои деревянные дома. 
+              Мы гордимся качеством работы и репутацией.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {whyUs.map((item, index) => (
-              <Card key={index} className="text-center p-8 hover:shadow-lg transition-shadow">
-                <CardContent className="space-y-4 p-0">
-                  <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                    <Icon name={item.icon} className="text-primary" size={40} />
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/50"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500" />
+                
+                <CardContent className="relative p-8 space-y-6">
+                  <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <Icon name={item.icon} className="text-white" size={36} />
                   </div>
-                  <h3 className="text-2xl font-bold">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+                  
+                  <div>
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-primary/10">
+                    <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+                      <Icon name="CheckCircle" size={16} />
+                      <span>Подтверждено</span>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          <div className="mt-16 grid md:grid-cols-3 gap-8">
+            <Card className="text-center p-8 bg-gradient-to-br from-primary/5 to-transparent border-2 border-primary/20">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+                <Icon name="TrendingUp" className="text-primary" size={32} />
+              </div>
+              <div className="text-4xl font-bold text-primary mb-2">200+</div>
+              <div className="text-muted-foreground font-medium">Завершённых проектов за 2024 год</div>
+            </Card>
+
+            <Card className="text-center p-8 bg-gradient-to-br from-accent/5 to-transparent border-2 border-accent/20">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/10 rounded-full mb-4">
+                <Icon name="Users" className="text-accent" size={32} />
+              </div>
+              <div className="text-4xl font-bold text-accent mb-2">98%</div>
+              <div className="text-muted-foreground font-medium">Клиентов рекомендуют нас друзьям</div>
+            </Card>
+
+            <Card className="text-center p-8 bg-gradient-to-br from-primary/5 to-transparent border-2 border-primary/20">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+                <Icon name="Award" className="text-primary" size={32} />
+              </div>
+              <div className="text-4xl font-bold text-primary mb-2">10 лет</div>
+              <div className="text-muted-foreground font-medium">Гарантия на покрасочные работы</div>
+            </Card>
           </div>
         </div>
       </section>
