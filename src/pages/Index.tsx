@@ -301,47 +301,104 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="space-y-16 max-w-7xl mx-auto">
             {services.map((service, index) => (
               <Card 
                 key={index}
-                className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white overflow-hidden"
+                className="overflow-hidden border-0 shadow-xl"
               >
-                <CardContent className="p-8 space-y-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Icon name={service.icon} className="text-white" size={32} />
-                  </div>
-                  
-                  <div className="space-y-3">
-                    <h3 className="text-xl font-bold leading-tight">
-                      {service.title}
-                    </h3>
-                    
-                    <p className="text-sm text-muted-foreground leading-relaxed min-h-[60px]">
-                      {service.description}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 border-t space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground font-medium">Стоимость</span>
-                      <span className="text-lg font-black text-primary">{service.price}</span>
+                <div className="grid lg:grid-cols-5 gap-0">
+                  <div className="lg:col-span-2 grid grid-cols-2 gap-1">
+                    <div className="relative h-64 overflow-hidden group">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/10" />
+                    </div>
+                    <div className="relative h-64 overflow-hidden group">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/10" />
+                    </div>
+                    <div className="relative h-64 overflow-hidden group">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/10" />
+                    </div>
+                    <div className="relative h-64 overflow-hidden group">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/10" />
+                      <div className="absolute top-4 right-4">
+                        <div className="w-14 h-14 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                          <Icon name={service.icon} className="text-primary" size={24} />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </CardContent>
+
+                  <CardContent className="lg:col-span-3 p-8 lg:p-12 flex flex-col justify-center space-y-6">
+                    <div className="space-y-4">
+                      <h3 className="text-3xl lg:text-4xl font-bold leading-tight">
+                        {service.title}
+                      </h3>
+                      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        {service.description}
+                      </p>
+
+                      <div className="grid sm:grid-cols-2 gap-3 pt-4">
+                        {service.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-start gap-3">
+                            <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <Icon name="Check" className="text-primary" size={12} />
+                            </div>
+                            <span className="text-sm text-muted-foreground">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 pt-6 border-t">
+                      <div className="flex-1">
+                        <span className="text-sm text-muted-foreground block mb-1">Стоимость работ</span>
+                        <span className="text-3xl font-black text-primary">{service.price}</span>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-3">
+                        <Button 
+                          size="lg"
+                          className="bg-gradient-to-r from-primary to-accent hover:shadow-xl transition-all"
+                          onClick={() => setShowCalculator(true)}
+                        >
+                          <Icon name="Calculator" className="mr-2" size={18} />
+                          Рассчитать стоимость
+                        </Button>
+                        <Button 
+                          size="lg"
+                          variant="outline"
+                          className="border-2"
+                        >
+                          Узнать подробнее
+                          <Icon name="ArrowRight" className="ml-2" size={18} />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
             ))}
-          </div>
-
-          <div className="text-center pt-12">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all text-lg px-8"
-              onClick={() => setShowCalculator(true)}
-            >
-              <Icon name="Calculator" className="mr-2" size={22} />
-              Рассчитать точную стоимость
-            </Button>
           </div>
         </div>
       </section>
