@@ -301,49 +301,83 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => (
-              <Card 
-                key={index} 
-                className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50 bg-white"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2 text-white mb-2">
-                      <Icon name={service.icon} size={20} />
-                      <span className="font-bold text-lg">{service.title}</span>
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+            <div className="space-y-6">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[400px] group">
+                <img
+                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/f9465c30-980c-4ed1-9747-4ffa52343dd0.jpg"
+                  alt="Деревянный дом"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute top-6 right-6">
+                  <div className="w-24 h-24 bg-primary/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl">
+                    <div className="text-center">
+                      <div className="text-3xl font-black text-white">10+</div>
+                      <div className="text-xs text-white/90 font-bold">лет опыта</div>
                     </div>
-                    <div className="text-white/90 text-sm font-semibold">{service.price}</div>
                   </div>
                 </div>
-                
-                <CardContent className="p-5">
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-2">
-                    {service.description}
-                  </p>
-                  
-                  <div className="space-y-2 mb-4">
-                    {service.features.slice(0, 3).map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <Icon name="Check" className="text-primary flex-shrink-0" size={14} />
-                        <span className="text-xs">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+              </div>
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[300px] group">
+                <img
+                  src="https://cdn.poehali.dev/projects/1e675e92-c5ae-402b-928e-d196389e8223/files/e3c116a3-2978-4751-89eb-73b5d87ad36a.jpg"
+                  alt="Работы по дереву"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
+            </div>
 
-                  <Button size="sm" className="w-full bg-primary hover:bg-accent group-hover:shadow-lg transition-all">
-                    Заказать
-                    <Icon name="ArrowRight" className="ml-1 group-hover:translate-x-1 transition-transform" size={16} />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  Полный спектр услуг по отделке и защите деревянных домов. 
+                  Работаем с премиальными материалами и даём гарантию на все виды работ.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                {[
+                  { title: "Покраска деревянного дома", progress: 95, price: "от 450 ₽/м²" },
+                  { title: "Шлифовка бруса и бревна", progress: 90, price: "от 200 ₽/м²" },
+                  { title: "Теплый шов (герметизация)", progress: 88, price: "от 350 ₽/п.м" },
+                  { title: "Комплексная защита древесины", progress: 92, price: "от 800 ₽/м²" }
+                ].map((service, index) => (
+                  <div key={index} className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-bold">{service.title}</h3>
+                      <span className="text-2xl font-black text-primary">{service.progress}%</span>
+                    </div>
+                    <div className="relative h-3 bg-secondary rounded-full overflow-hidden">
+                      <div 
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-1000 ease-out"
+                        style={{ width: `${service.progress}%` }}
+                      />
+                      <div 
+                        className="absolute right-0 top-1/2 -translate-y-1/2 w-6 h-6 bg-accent rounded-full shadow-lg border-4 border-white transition-all duration-1000 ease-out"
+                        style={{ right: `${100 - service.progress}%` }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{service.price}</span>
+                      <Button size="sm" variant="ghost" className="text-primary font-semibold hover:bg-primary/10">
+                        Подробнее <Icon name="ArrowRight" className="ml-1" size={14} />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all"
+                onClick={() => setShowCalculator(true)}
+              >
+                <Icon name="Calculator" className="mr-2" size={20} />
+                Рассчитать стоимость
+              </Button>
+            </div>
           </div>
         </div>
       </section>
