@@ -148,75 +148,94 @@ const Index = () => {
         </nav>
       </header>
 
-      <section className="pt-32 pb-20 bg-gradient-to-b from-secondary to-white">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full mb-8">
-                <Icon name="Sparkles" size={20} />
-                <span className="font-semibold">Профессиональная отделка деревянных домов</span>
+      <section className="pt-32 pb-24 bg-gradient-to-br from-secondary/40 via-white to-primary/5 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 right-1/4 w-96 h-96 bg-primary rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-accent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-accent text-white px-8 py-4 rounded-full shadow-xl animate-bounce-slow">
+                  <Icon name="TreePine" size={24} />
+                  <span className="font-bold text-base">Эксперты по деревянным домам с 2014 года</span>
+                </div>
+                
+                <h1 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight">
+                  <span className="block text-foreground mb-2">Продлеваем жизнь</span>
+                  <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                    деревянному дому
+                  </span>
+                  <span className="block text-foreground mt-2">на десятилетия</span>
+                </h1>
               </div>
               
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                <span className="text-foreground">Защита и красота вашего </span>
-                <span className="text-primary">деревянного дома</span>
-              </h1>
+              <div className="space-y-4">
+                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
+                  Комплексная защита от гниения, влаги и насекомых. Используем премиальные немецкие составы с гарантией <span className="text-primary font-bold">до 10 лет</span>.
+                </p>
+                
+                <div className="flex flex-wrap gap-3">
+                  <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border-2 border-primary/20">
+                    <Icon name="CheckCircle" className="text-primary" size={18} />
+                    <span className="font-semibold text-sm">Покраска и шлифовка</span>
+                  </div>
+                  <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border-2 border-primary/20">
+                    <Icon name="CheckCircle" className="text-primary" size={18} />
+                    <span className="font-semibold text-sm">Теплый шов</span>
+                  </div>
+                  <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border-2 border-primary/20">
+                    <Icon name="CheckCircle" className="text-primary" size={18} />
+                    <span className="font-semibold text-sm">Осада проёмов</span>
+                  </div>
+                </div>
+              </div>
               
-              <p className="text-lg md:text-xl text-muted-foreground mb-8">
-                Покраска, шлифовка, теплый шов и осада для окон и дверей. Работаем с премиум материалами. Гарантия до 10 лет.
-              </p>
-              
-              <div className="flex flex-wrap gap-4 mb-12">
-                <Button size="lg" className="bg-primary hover:bg-accent text-lg px-8 py-6 h-auto">
-                  <Icon name="Phone" className="mr-2" size={22} />
-                  Получить консультацию
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button size="lg" className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl hover:scale-105 transition-all text-lg px-10 py-7 h-auto font-bold">
+                  <Icon name="Calculator" className="mr-3" size={24} />
+                  Рассчитать стоимость
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto border-2">
-                  <Icon name="Briefcase" className="mr-2" size={22} />
-                  Наши услуги
+                <Button size="lg" variant="outline" className="text-lg px-10 py-7 h-auto border-2 border-primary hover:bg-primary hover:text-white transition-all font-bold">
+                  <Icon name="Phone" className="mr-3" size={24} />
+                  +7 (495) 123-45-67
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="Home" className="text-primary" size={32} />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8">
+                <Card className="text-center p-5 bg-white/80 backdrop-blur-sm border-2 hover:border-primary transition-all hover:scale-105 hover:shadow-xl">
+                  <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 shadow-lg">
+                    <Icon name="Home" className="text-white" size={28} />
                   </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">500+</div>
-                    <div className="text-muted-foreground">Домов защищено</div>
-                  </div>
-                </div>
+                  <div className="text-3xl font-black text-primary mb-1">500+</div>
+                  <div className="text-xs text-muted-foreground font-semibold">Домов под защитой</div>
+                </Card>
 
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="Award" className="text-primary" size={32} />
+                <Card className="text-center p-5 bg-white/80 backdrop-blur-sm border-2 hover:border-accent transition-all hover:scale-105 hover:shadow-xl">
+                  <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-accent to-primary rounded-2xl mb-3 shadow-lg">
+                    <Icon name="Calendar" className="text-white" size={28} />
                   </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">10 лет</div>
-                    <div className="text-muted-foreground">Опыта работы</div>
-                  </div>
-                </div>
+                  <div className="text-3xl font-black text-accent mb-1">10+</div>
+                  <div className="text-xs text-muted-foreground font-semibold">Лет на рынке</div>
+                </Card>
 
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="ThumbsUp" className="text-primary" size={32} />
+                <Card className="text-center p-5 bg-white/80 backdrop-blur-sm border-2 hover:border-primary transition-all hover:scale-105 hover:shadow-xl">
+                  <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 shadow-lg">
+                    <Icon name="Star" className="text-white" size={28} />
                   </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">98%</div>
-                    <div className="text-muted-foreground">Довольных клиентов</div>
-                  </div>
-                </div>
+                  <div className="text-3xl font-black text-primary mb-1">4.9</div>
+                  <div className="text-xs text-muted-foreground font-semibold">Рейтинг на Яндекс</div>
+                </Card>
 
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-4 rounded-2xl">
-                    <Icon name="Headphones" className="text-primary" size={32} />
+                <Card className="text-center p-5 bg-white/80 backdrop-blur-sm border-2 hover:border-accent transition-all hover:scale-105 hover:shadow-xl">
+                  <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-accent to-primary rounded-2xl mb-3 shadow-lg">
+                    <Icon name="ThumbsUp" className="text-white" size={28} />
                   </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary mb-1">24/7</div>
-                    <div className="text-muted-foreground">Поддержка</div>
-                  </div>
-                </div>
+                  <div className="text-3xl font-black text-accent mb-1">98%</div>
+                  <div className="text-xs text-muted-foreground font-semibold">Рекомендуют нас</div>
+                </Card>
               </div>
             </div>
 
