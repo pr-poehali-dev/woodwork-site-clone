@@ -299,74 +299,73 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="space-y-12 max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-7xl mx-auto">
             {services.map((service, index) => (
-              <div 
+              <Card 
                 key={index}
-                className="grid lg:grid-cols-2 gap-8 p-0"
+                className="overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all"
               >
-                  <div className="relative rounded-2xl overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover min-h-[400px]"
-                    />
-                    <div className="absolute top-6 left-6">
-                      <div className="w-16 h-16 rounded-2xl bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-xl">
-                        <Icon name={service.icon} className="text-primary" size={28} />
-                      </div>
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-6 left-6">
+                    <div className="w-14 h-14 rounded-xl bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-xl">
+                      <Icon name={service.icon} className="text-primary" size={24} />
                     </div>
                   </div>
+                </div>
 
-                  <div className="flex flex-col justify-center space-y-6">
-                    <div className="space-y-4">
-                      <h3 className="text-3xl lg:text-4xl font-bold leading-tight">
-                        {service.title}
-                      </h3>
-                      
-                      <p className="text-xl text-muted-foreground leading-relaxed">
-                        {service.description}
-                      </p>
+                <CardContent className="p-6 space-y-4">
+                  <div className="space-y-3">
+                    <h3 className="text-2xl font-bold leading-tight">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-base text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
 
-                      <div className="space-y-2 pt-4">
-                        {service.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                              <Icon name="Check" className="text-primary" size={12} />
-                            </div>
-                            <span className="text-base text-muted-foreground">{feature}</span>
+                    <div className="space-y-2 pt-2">
+                      {service.features.slice(0, 3).map((feature, idx) => (
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-4 h-4 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <Icon name="Check" className="text-primary" size={10} />
                           </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-4 pt-6 border-t">
-                      <div>
-                        <span className="text-sm text-muted-foreground block mb-1">Стоимость работ</span>
-                        <span className="text-3xl font-black text-primary">{service.price}</span>
-                      </div>
-                      
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <Button 
-                          size="lg"
-                          className="bg-gradient-to-r from-primary to-accent hover:shadow-xl transition-all text-base px-8 py-6 h-auto"
-                          onClick={() => setShowCalculator(true)}
-                        >
-                          <Icon name="Calculator" className="mr-2" size={20} />
-                          Рассчитать стоимость
-                        </Button>
-                        <Button 
-                          size="lg"
-                          variant="outline"
-                          className="border-2 text-base px-8 py-6 h-auto"
-                        >
-                          Узнать подробнее
-                          <Icon name="ArrowRight" className="ml-2" size={20} />
-                        </Button>
-                      </div>
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-              </div>
+
+                  <div className="space-y-3 pt-4 border-t">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-xs text-muted-foreground">от</span>
+                      <span className="text-2xl font-black text-primary">{service.price}</span>
+                    </div>
+                    
+                    <div className="flex flex-col gap-2">
+                      <Button 
+                        className="bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all w-full"
+                        onClick={() => setShowCalculator(true)}
+                      >
+                        <Icon name="Calculator" className="mr-2" size={16} />
+                        Рассчитать стоимость
+                      </Button>
+                      <Button 
+                        variant="outline"
+                        className="border-2 w-full"
+                      >
+                        Узнать подробнее
+                        <Icon name="ArrowRight" className="ml-2" size={16} />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
