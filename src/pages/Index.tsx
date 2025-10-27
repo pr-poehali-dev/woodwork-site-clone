@@ -12,6 +12,34 @@ const Index = () => {
     message: "",
   });
 
+  const [calculatorData, setCalculatorData] = useState({
+    area: "",
+    service: "painting",
+    additional: [] as string[]
+  });
+
+  const [showCalculator, setShowCalculator] = useState(false);
+
+  const calculatePrice = () => {
+    const areaNum = parseFloat(calculatorData.area) || 0;
+    let basePrice = 0;
+    
+    switch(calculatorData.service) {
+      case "painting": basePrice = 450; break;
+      case "sanding": basePrice = 200; break;
+      case "warmseam": basePrice = 350; break;
+      case "complex": basePrice = 800; break;
+    }
+    
+    let total = areaNum * basePrice;
+    
+    if (calculatorData.additional.includes("antiseptic")) total += areaNum * 150;
+    if (calculatorData.additional.includes("primer")) total += areaNum * 100;
+    if (calculatorData.additional.includes("express")) total += total * 0.2;
+    
+    return Math.round(total);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
@@ -169,10 +197,11 @@ const Index = () => {
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
                 <Button 
                   size="lg" 
+                  onClick={() => setShowCalculator(true)}
                   className="bg-gradient-to-r from-primary to-accent hover:shadow-2xl hover:scale-105 transition-all text-lg px-10 py-7 h-auto font-bold group"
                 >
-                  <Icon name="Phone" className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
-                  Получить консультацию
+                  <Icon name="Calculator" className="mr-3 group-hover:scale-110 transition-transform" size={24} />
+                  Рассчитать стоимость
                 </Button>
                 <Button 
                   size="lg" 
@@ -184,66 +213,40 @@ const Index = () => {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-primary/50 bg-white/80 backdrop-blur-sm">
-                  <CardContent className="p-6">
-                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-primary/5 rounded-full" />
-                    <div className="relative flex items-center gap-4">
-                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
-                        <Icon name="Home" className="text-white" size={28} />
-                      </div>
-                      <div>
-                        <div className="text-4xl font-black text-primary mb-1">500+</div>
-                        <div className="text-sm font-semibold text-muted-foreground">Домов защищено</div>
-                      </div>
+              <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl p-6 border-2 border-primary/20">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 shadow-lg">
+                      <Icon name="Home" className="text-white" size={26} />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1">500+</div>
+                    <div className="text-xs md:text-sm font-bold text-foreground">Домов защищено</div>
+                  </div>
 
-                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-accent/50 bg-white/80 backdrop-blur-sm">
-                  <CardContent className="p-6">
-                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-accent/5 rounded-full" />
-                    <div className="relative flex items-center gap-4">
-                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-2xl flex items-center justify-center shadow-lg">
-                        <Icon name="Award" className="text-white" size={28} />
-                      </div>
-                      <div>
-                        <div className="text-4xl font-black text-accent mb-1">10 лет</div>
-                        <div className="text-sm font-semibold text-muted-foreground">Опыта работы</div>
-                      </div>
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-accent to-primary rounded-2xl mb-3 shadow-lg">
+                      <Icon name="Award" className="text-white" size={26} />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-1">10 лет</div>
+                    <div className="text-xs md:text-sm font-bold text-foreground">Опыта работы</div>
+                  </div>
 
-                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-primary/50 bg-white/80 backdrop-blur-sm">
-                  <CardContent className="p-6">
-                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-primary/5 rounded-full" />
-                    <div className="relative flex items-center gap-4">
-                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
-                        <Icon name="ThumbsUp" className="text-white" size={28} />
-                      </div>
-                      <div>
-                        <div className="text-4xl font-black text-primary mb-1">98%</div>
-                        <div className="text-sm font-semibold text-muted-foreground">Довольных клиентов</div>
-                      </div>
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-2xl mb-3 shadow-lg">
+                      <Icon name="Star" className="text-white" size={26} />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1">4.9</div>
+                    <div className="text-xs md:text-sm font-bold text-foreground">Рейтинг Яндекс</div>
+                  </div>
 
-                <Card className="relative overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-transparent hover:border-accent/50 bg-white/80 backdrop-blur-sm">
-                  <CardContent className="p-6">
-                    <div className="absolute -top-8 -right-8 w-24 h-24 bg-accent/5 rounded-full" />
-                    <div className="relative flex items-center gap-4">
-                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-2xl flex items-center justify-center shadow-lg">
-                        <Icon name="Headphones" className="text-white" size={28} />
-                      </div>
-                      <div>
-                        <div className="text-4xl font-black text-accent mb-1">24/7</div>
-                        <div className="text-sm font-semibold text-muted-foreground">Поддержка</div>
-                      </div>
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-accent to-primary rounded-2xl mb-3 shadow-lg">
+                      <Icon name="ThumbsUp" className="text-white" size={26} />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="text-3xl md:text-4xl font-black bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-1">98%</div>
+                    <div className="text-xs md:text-sm font-bold text-foreground">Рекомендуют</div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -366,6 +369,153 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {showCalculator && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowCalculator(false)}>
+          <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <CardContent className="p-8">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-3xl font-bold mb-2">Калькулятор стоимости</h2>
+                  <p className="text-muted-foreground">Рассчитайте примерную стоимость работ</p>
+                </div>
+                <Button variant="ghost" size="icon" onClick={() => setShowCalculator(false)}>
+                  <Icon name="X" size={24} />
+                </Button>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-3">Площадь дома (м²)</label>
+                  <Input
+                    type="number"
+                    placeholder="150"
+                    value={calculatorData.area}
+                    onChange={(e) => setCalculatorData({ ...calculatorData, area: e.target.value })}
+                    className="h-14 text-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-3">Вид работ</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {[
+                      { value: "painting", label: "Покраска", price: "450 ₽/м²", icon: "Paintbrush" },
+                      { value: "sanding", label: "Шлифовка", price: "200 ₽/м²", icon: "Drill" },
+                      { value: "warmseam", label: "Теплый шов", price: "350 ₽/п.м", icon: "Thermometer" },
+                      { value: "complex", label: "Комплекс работ", price: "800 ₽/м²", icon: "Layers" }
+                    ].map((service) => (
+                      <Card
+                        key={service.value}
+                        className={`cursor-pointer transition-all hover:shadow-lg ${
+                          calculatorData.service === service.value 
+                            ? 'border-2 border-primary bg-primary/5' 
+                            : 'border-2 border-transparent'
+                        }`}
+                        onClick={() => setCalculatorData({ ...calculatorData, service: service.value })}
+                      >
+                        <CardContent className="p-4">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                              calculatorData.service === service.value 
+                                ? 'bg-primary text-white' 
+                                : 'bg-primary/10 text-primary'
+                            }`}>
+                              <Icon name={service.icon} size={24} />
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-bold">{service.label}</div>
+                              <div className="text-sm text-muted-foreground">{service.price}</div>
+                            </div>
+                            {calculatorData.service === service.value && (
+                              <Icon name="CheckCircle" className="text-primary" size={24} />
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-3">Дополнительно</label>
+                  <div className="space-y-3">
+                    {[
+                      { value: "antiseptic", label: "Антисептическая обработка", price: "+150 ₽/м²" },
+                      { value: "primer", label: "Грунтовка", price: "+100 ₽/м²" },
+                      { value: "express", label: "Срочное выполнение (7 дней)", price: "+20%" }
+                    ].map((addon) => (
+                      <Card
+                        key={addon.value}
+                        className={`cursor-pointer transition-all hover:shadow-lg ${
+                          calculatorData.additional.includes(addon.value)
+                            ? 'border-2 border-accent bg-accent/5'
+                            : 'border-2 border-transparent'
+                        }`}
+                        onClick={() => {
+                          const newAdditional = calculatorData.additional.includes(addon.value)
+                            ? calculatorData.additional.filter(a => a !== addon.value)
+                            : [...calculatorData.additional, addon.value];
+                          setCalculatorData({ ...calculatorData, additional: newAdditional });
+                        }}
+                      >
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className={`w-6 h-6 rounded border-2 flex items-center justify-center ${
+                                calculatorData.additional.includes(addon.value)
+                                  ? 'bg-accent border-accent'
+                                  : 'border-muted-foreground'
+                              }`}>
+                                {calculatorData.additional.includes(addon.value) && (
+                                  <Icon name="Check" className="text-white" size={16} />
+                                )}
+                              </div>
+                              <span className="font-semibold">{addon.label}</span>
+                            </div>
+                            <span className="text-sm text-muted-foreground">{addon.price}</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-6 border-2 border-primary/20">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-lg font-semibold">Примерная стоимость:</span>
+                    <div className="text-right">
+                      <div className="text-4xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                        {calculatorData.area ? calculatePrice().toLocaleString() : '0'} ₽
+                      </div>
+                      {calculatorData.area && (
+                        <div className="text-sm text-muted-foreground mt-1">
+                          ≈ {Math.round(calculatePrice() / parseFloat(calculatorData.area))} ₽/м²
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-4">
+                    * Точная стоимость рассчитывается после бесплатного выезда замерщика
+                  </p>
+                </div>
+
+                <Button 
+                  size="lg" 
+                  className="w-full bg-gradient-to-r from-primary to-accent hover:shadow-2xl text-lg py-6 h-auto font-bold"
+                  onClick={() => {
+                    setShowCalculator(false);
+                    document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  <Icon name="Send" className="mr-2" size={22} />
+                  Оставить заявку
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
