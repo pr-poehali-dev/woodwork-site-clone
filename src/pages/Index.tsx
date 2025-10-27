@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -51,7 +52,8 @@ const Index = () => {
       title: "Покраска деревянного дома",
       description: "Профессиональная покраска с использованием качественных материалов. Защита дерева от влаги, УФ-лучей и вредителей.",
       features: ["Премиум краски", "Многослойное покрытие", "Гарантия 10 лет"],
-      price: "от 450 ₽/м²"
+      price: "от 450 ₽/м²",
+      link: "/services/painting"
     },
     {
       icon: "Drill",
@@ -59,7 +61,8 @@ const Index = () => {
       title: "Шлифовка дома",
       description: "Тщательная шлифовка поверхностей перед покраской. Удаление старого покрытия, выравнивание структуры дерева.",
       features: ["Профессиональное оборудование", "Идеально гладкая поверхность", "Подготовка к покраске"],
-      price: "от 200 ₽/м²"
+      price: "от 200 ₽/м²",
+      link: "/services/sanding"
     },
     {
       icon: "Thermometer",
@@ -67,7 +70,8 @@ const Index = () => {
       title: "Теплый шов",
       description: "Утепление межвенцовых швов современными материалами. Защита от продувания и теплопотерь.",
       features: ["Экологичные материалы", "Защита от продувания", "Снижение теплопотерь"],
-      price: "от 350 ₽/п.м"
+      price: "от 350 ₽/п.м",
+      link: "#"
     },
     {
       icon: "DoorOpen",
@@ -75,7 +79,8 @@ const Index = () => {
       title: "Осада окон и дверей",
       description: "Профессиональная установка и отделка оконных и дверных проемов. Герметизация и утепление.",
       features: ["Точная подгонка", "Герметизация", "Защита от сквозняков"],
-      price: "от 3500 ₽/проем"
+      price: "от 3500 ₽/проем",
+      link: "#"
     },
   ];
 
@@ -355,13 +360,15 @@ const Index = () => {
                         <Icon name="Calculator" className="mr-2" size={16} />
                         Рассчитать стоимость
                       </Button>
-                      <Button 
-                        variant="outline"
-                        className="border-2 w-full"
-                      >
-                        Узнать подробнее
-                        <Icon name="ArrowRight" className="ml-2" size={16} />
-                      </Button>
+                      <Link to={service.link} className="w-full">
+                        <Button 
+                          variant="outline"
+                          className="border-2 w-full"
+                        >
+                          Узнать подробнее
+                          <Icon name="ArrowRight" className="ml-2" size={16} />
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </CardContent>
