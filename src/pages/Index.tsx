@@ -301,11 +301,10 @@ const Index = () => {
 
           <div className="space-y-12 max-w-7xl mx-auto">
             {services.map((service, index) => (
-              <Card 
+              <div 
                 key={index}
-                className="overflow-hidden border border-gray-100 shadow-lg hover:shadow-xl transition-shadow"
+                className="grid lg:grid-cols-2 gap-8 p-0"
               >
-                <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-10">
                   <div className="relative rounded-2xl overflow-hidden">
                     <img
                       src={service.image}
@@ -367,8 +366,7 @@ const Index = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
