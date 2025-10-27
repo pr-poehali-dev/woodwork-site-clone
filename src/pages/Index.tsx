@@ -340,6 +340,180 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="Layers" size={20} />
+              <span className="font-semibold">Технология работы</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Как мы работаем
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Проверенная технология в 5 этапов — от консультации до гарантийного обслуживания
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="space-y-8">
+              {[
+                {
+                  number: "01",
+                  icon: "Phone",
+                  title: "Консультация и выезд замерщика",
+                  description: "Бесплатный выезд специалиста на объект. Осмотр дома, консультация по материалам и технологиям. Составление предварительной сметы.",
+                  time: "1-2 дня"
+                },
+                {
+                  number: "02",
+                  icon: "FileText",
+                  title: "Составление договора",
+                  description: "Фиксированная цена в договоре, детальная смета работ. Прозрачные условия оплаты и график выполнения работ.",
+                  time: "1 день"
+                },
+                {
+                  number: "03",
+                  icon: "Hammer",
+                  title: "Подготовка поверхностей",
+                  description: "Шлифовка стен профессиональным оборудованием. Удаление старого покрытия, очистка от пыли и загрязнений. Обработка антисептиками.",
+                  time: "3-7 дней"
+                },
+                {
+                  number: "04",
+                  icon: "Paintbrush",
+                  title: "Основные работы",
+                  description: "Нанесение грунта и защитных составов. Покраска в 2-3 слоя с соблюдением технологии. Герметизация швов, осада проёмов.",
+                  time: "5-10 дней"
+                },
+                {
+                  number: "05",
+                  icon: "CheckCircle",
+                  title: "Сдача и гарантия",
+                  description: "Подписание акта выполненных работ. Выдача гарантийного талона до 10 лет. Консультации по уходу за покрытием.",
+                  time: "1 день"
+                }
+              ].map((step, index) => (
+                <Card key={index} className="relative overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50">
+                  <CardContent className="p-8">
+                    <div className="flex flex-col md:flex-row gap-6 items-start">
+                      <div className="flex-shrink-0">
+                        <div className="relative">
+                          <div className="text-7xl font-black text-primary/10 absolute -top-4 -left-2">
+                            {step.number}
+                          </div>
+                          <div className="relative w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+                            <Icon name={step.icon} className="text-white" size={32} />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-4 mb-3">
+                          <h3 className="text-2xl font-bold">{step.title}</h3>
+                          <div className="flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full whitespace-nowrap">
+                            <Icon name="Clock" size={16} className="text-primary" />
+                            <span className="text-sm font-semibold text-primary">{step.time}</span>
+                          </div>
+                        </div>
+                        <p className="text-muted-foreground leading-relaxed text-base">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-gradient-to-b from-secondary/30 to-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="Palette" size={20} />
+              <span className="font-semibold">Материалы</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Работаем с лучшими европейскими брендами
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Используем только сертифицированные материалы с доказанной долговечностью
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                icon: "Shield",
+                title: "Немецкие краски",
+                brand: "Remmers, Zobel",
+                features: ["Защита до 15 лет", "Экологичность", "UV-фильтры"],
+                badge: "Премиум"
+              },
+              {
+                icon: "Droplet",
+                title: "Герметики для швов",
+                brand: "Remmers Acryl",
+                features: ["Эластичность", "Морозостойкость", "Паропроницаемость"],
+                badge: "Проверено"
+              },
+              {
+                icon: "Sparkles",
+                title: "Антисептики",
+                brand: "Neomid, Teknos",
+                features: ["Защита от грибка", "Огнебиозащита", "Глубокое проникновение"],
+                badge: "Эффективно"
+              }
+            ].map((material, index) => (
+              <Card key={index} className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2">
+                <div className="absolute top-4 right-4">
+                  <div className="bg-accent text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                    {material.badge}
+                  </div>
+                </div>
+
+                <CardContent className="p-8 space-y-6">
+                  <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+                    <Icon name={material.icon} className="text-white" size={36} />
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">{material.title}</h3>
+                    <p className="text-primary font-semibold">{material.brand}</p>
+                  </div>
+
+                  <div className="space-y-3">
+                    {material.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <div className="bg-primary/10 p-1.5 rounded-full">
+                          <Icon name="Check" className="text-primary" size={14} />
+                        </div>
+                        <span className="text-sm">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Card className="inline-block bg-primary/5 border-2 border-primary/20 p-6">
+              <div className="flex items-center gap-4">
+                <Icon name="Award" className="text-primary" size={40} />
+                <div className="text-left">
+                  <div className="font-bold text-lg mb-1">Все материалы сертифицированы</div>
+                  <div className="text-sm text-muted-foreground">Предоставляем документы и гарантию качества</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 bg-gradient-to-br from-primary via-accent to-primary relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
@@ -571,6 +745,146 @@ const Index = () => {
               <Icon name="Images" className="mr-2" size={20} />
               Смотреть все проекты
             </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-gradient-to-b from-white to-secondary/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="MessageSquare" size={20} />
+              <span className="font-semibold">Отзывы клиентов</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Что говорят наши клиенты
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Более 500 довольных владельцев деревянных домов рекомендуют нас
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                name: "Михаил Соколов",
+                location: "Московская область",
+                rating: 5,
+                text: "Отличная работа! Покрасили дом из бруса 200м². Ребята работали быстро и аккуратно. Цвет получился именно таким, каким мы хотели. Прошло уже 2 года — покрытие как новое.",
+                date: "Октябрь 2023"
+              },
+              {
+                name: "Елена Морозова",
+                location: "Подмосковье",
+                rating: 5,
+                text: "Делали теплый шов и покраску. Очень довольны результатом! В доме стало заметно теплее, сквозняков нет. Мастера профессионалы своего дела, все объяснили и показали.",
+                date: "Сентябрь 2023"
+              },
+              {
+                name: "Андрей Волков",
+                location: "Москва",
+                rating: 5,
+                text: "Заказывал комплексную отделку сруба. От шлифовки до финишной покраски. Работы выполнили в срок, договор без скрытых доплат. Качество на высоте, рекомендую!",
+                date: "Август 2023"
+              }
+            ].map((review, index) => (
+              <Card key={index} className="hover:shadow-2xl transition-all duration-300 border-2">
+                <CardContent className="p-8 space-y-6">
+                  <div className="flex items-center gap-1">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Icon key={i} name="Star" className="text-yellow-500 fill-yellow-500" size={20} />
+                    ))}
+                  </div>
+
+                  <p className="text-muted-foreground leading-relaxed italic">
+                    "{review.text}"
+                  </p>
+
+                  <div className="pt-4 border-t">
+                    <div className="font-bold text-lg">{review.name}</div>
+                    <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
+                      <Icon name="MapPin" size={14} />
+                      {review.location}
+                    </div>
+                    <div className="text-xs text-primary font-semibold mt-2">
+                      {review.date}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Button size="lg" variant="outline" className="border-2 border-primary">
+              <Icon name="ExternalLink" className="mr-2" size={20} />
+              Все отзывы на Яндекс.Картах
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-6 py-3 rounded-full mb-6">
+              <Icon name="HelpCircle" size={20} />
+              <span className="font-semibold">Частые вопросы</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Ответы на популярные вопросы
+            </h2>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-4">
+            {[
+              {
+                question: "Сколько стоит покраска деревянного дома?",
+                answer: "Стоимость зависит от площади, состояния поверхности и выбранных материалов. В среднем покраска стоит от 450 ₽/м². Шлифовка — от 200 ₽/м². Точную цену рассчитаем после бесплатного выезда замерщика."
+              },
+              {
+                question: "Как долго держится покрытие?",
+                answer: "При использовании качественных немецких красок (Remmers, Zobel) покрытие служит 10-15 лет. Мы даём официальную гарантию до 10 лет на все виды работ."
+              },
+              {
+                question: "Можно ли красить дом зимой?",
+                answer: "Покраску рекомендуем проводить при температуре от +5°C до +25°C. Оптимальное время — весна и осень. Зимой возможна только внутренняя отделка в отапливаемых помещениях."
+              },
+              {
+                question: "Как долго длятся работы?",
+                answer: "Сроки зависят от объёма. Покраска дома 150-200 м² занимает 7-14 дней. Шлифовка + покраска — 10-20 дней. Точные сроки указываем в договоре."
+              },
+              {
+                question: "Нужно ли готовить дом перед покраской?",
+                answer: "Всю подготовку делаем мы: шлифовку, очистку, обработку антисептиками. От вас требуется только обеспечить доступ к объекту и электричество."
+              }
+            ].map((faq, index) => (
+              <Card key={index} className="hover:shadow-lg transition-all border-2">
+                <CardContent className="p-8">
+                  <div className="flex gap-6">
+                    <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Icon name="MessageCircle" className="text-primary" size={24} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-3">{faq.question}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Card className="inline-block bg-primary/5 border-2 border-primary/20 p-6">
+              <div className="flex items-center gap-4">
+                <Icon name="Phone" className="text-primary" size={40} />
+                <div className="text-left">
+                  <div className="font-bold text-lg mb-1">Не нашли ответ на вопрос?</div>
+                  <div className="text-sm text-muted-foreground">Позвоните нам: <span className="text-primary font-bold">+7 (495) 123-45-67</span></div>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
