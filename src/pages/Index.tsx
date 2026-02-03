@@ -204,59 +204,76 @@ const Index = () => {
       const layout = getSmartLayout(canvas.width, canvas.height);
 
       if (editOverlayEnabled) {
-        const gradient = ctx.createLinearGradient(0, canvas.height / 2, 0, canvas.height);
+        const gradient = ctx.createLinearGradient(0, canvas.height * 0.4, 0, canvas.height);
         gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.85)');
+        gradient.addColorStop(0.4, 'rgba(0, 0, 0, 0.5)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.92)');
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.textAlign = layout.textAlign;
-        const padding = layout.padding;
-        const xCenter = layout.textAlign === 'center' ? canvas.width / 2 : padding;
+        const padding = Math.max(canvas.width * 0.08, 30);
         let yPosition = canvas.height - padding;
 
         if (showButton && editButtonText) {
-          const buttonWidth = canvas.width * layout.buttonWidth;
-          const buttonHeight = Math.max(canvas.height * 0.08, 30);
-          const buttonX = layout.textAlign === 'center' ? (canvas.width - buttonWidth) / 2 : padding;
-          const buttonY = canvas.height - padding - buttonHeight;
+          const buttonWidth = Math.floor(canvas.width * 0.55);
+          const buttonHeight = Math.floor(canvas.height * 0.12);
+          const buttonX = (canvas.width - buttonWidth) / 2;
+          const buttonY = yPosition - buttonHeight;
 
-          ctx.fillStyle = '#10b981';
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-          ctx.shadowBlur = 10;
-          ctx.shadowOffsetY = 4;
-          roundRect(ctx, buttonX, buttonY, buttonWidth, buttonHeight, 12);
+          ctx.fillStyle = '#16a34a';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+          ctx.shadowBlur = 20;
+          ctx.shadowOffsetY = 6;
+          roundRect(ctx, buttonX, buttonY, buttonWidth, buttonHeight, Math.floor(buttonHeight * 0.25));
           ctx.fill();
           ctx.shadowBlur = 0;
 
-          ctx.font = `bold ${Math.floor(buttonHeight * 0.4)}px Arial`;
+          ctx.font = `900 ${Math.floor(buttonHeight * 0.38)}px Arial, sans-serif`;
           ctx.fillStyle = '#ffffff';
           ctx.textAlign = 'center';
-          ctx.fillText(editButtonText, buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 + Math.floor(buttonHeight * 0.15));
+          ctx.textBaseline = 'middle';
+          ctx.fillText(editButtonText.toUpperCase(), canvas.width / 2, buttonY + buttonHeight / 2);
           
-          ctx.textAlign = layout.textAlign;
-          yPosition = buttonY - 20;
+          yPosition = buttonY - Math.floor(canvas.height * 0.08);
         }
 
         if (showDescription && editDescription) {
-          ctx.font = `${Math.floor(canvas.height * layout.descSize)}px Arial`;
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-          const descLines = wrapText(ctx, editDescription, canvas.width - padding * 2);
+          ctx.font = `600 ${Math.floor(canvas.height * 0.055)}px Arial, sans-serif`;
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'alphabetic';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+          ctx.shadowBlur = 12;
+          
+          const descLines = wrapText(ctx, editDescription, canvas.width - padding * 2.5);
+          const lineHeight = Math.floor(canvas.height * 0.065);
+          
           descLines.reverse().forEach(line => {
-            ctx.fillText(line, xCenter, yPosition);
-            yPosition -= Math.floor(canvas.height * (layout.descSize + 0.01));
+            ctx.fillText(line, canvas.width / 2, yPosition);
+            yPosition -= lineHeight;
           });
-          yPosition -= 15;
+          
+          yPosition -= Math.floor(canvas.height * 0.05);
+          ctx.shadowBlur = 0;
         }
 
         if (showTitle && editTitle) {
-          ctx.font = `bold ${Math.floor(canvas.height * layout.titleSize)}px Arial`;
+          ctx.font = `900 ${Math.floor(canvas.height * 0.095)}px Arial, sans-serif`;
           ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'alphabetic';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+          ctx.shadowBlur = 18;
+          
           const titleLines = wrapText(ctx, editTitle, canvas.width - padding * 2);
+          const titleLineHeight = Math.floor(canvas.height * 0.11);
+          
           titleLines.reverse().forEach(line => {
-            ctx.fillText(line, xCenter, yPosition);
-            yPosition -= Math.floor(canvas.height * (layout.titleSize + 0.01));
+            ctx.fillText(line, canvas.width / 2, yPosition);
+            yPosition -= titleLineHeight;
           });
+          
+          ctx.shadowBlur = 0;
         }
       }
 
@@ -526,122 +543,133 @@ const Index = () => {
                 </Button>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="font-bold text-gray-900 mb-4">Превью</h4>
-                  <div className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden">
-                    <img
-                      src={generatedImages[editingIndex].url}
-                      alt="Превью"
-                      className="w-full h-full object-cover"
-                    />
-                    {editOverlayEnabled && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end p-8 text-center">
-                        {showTitle && editTitle && (
-                          <h3 className="text-white font-black text-2xl mb-2">{editTitle}</h3>
-                        )}
-                        {showDescription && editDescription && (
-                          <p className="text-white/90 text-sm mb-4">{editDescription}</p>
-                        )}
-                        {showButton && editButtonText && (
-                          <button className="bg-green-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg">
-                            {editButtonText}
-                          </button>
-                        )}
+              <div className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="font-black text-gray-900 mb-4 text-xl">Превью</h4>
+                    <div className="relative aspect-square bg-gray-100 rounded-2xl overflow-hidden shadow-2xl border-4 border-gray-200">
+                      <img
+                        src={generatedImages[editingIndex].url}
+                        alt="Превью"
+                        className="w-full h-full object-cover"
+                      />
+                      {editOverlayEnabled && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col items-center justify-end pb-12 px-8 text-center">
+                          <div className="space-y-4 w-full max-w-lg">
+                            {showTitle && editTitle && (
+                              <h3 className="text-white font-black text-4xl drop-shadow-2xl leading-tight tracking-tight">{editTitle}</h3>
+                            )}
+                            {showDescription && editDescription && (
+                              <p className="text-white/95 text-lg font-semibold drop-shadow-lg leading-relaxed">{editDescription}</p>
+                            )}
+                            {showButton && editButtonText && (
+                              <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-2xl font-black shadow-2xl text-lg mt-4 transition-all transform hover:scale-105">
+                                {editButtonText}
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4 p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border-3 border-green-200 shadow-lg">
+                      <input
+                        type="checkbox"
+                        checked={editOverlayEnabled}
+                        onChange={(e) => setEditOverlayEnabled(e.target.checked)}
+                        className="w-7 h-7 accent-green-600 cursor-pointer"
+                        id="overlay-toggle"
+                      />
+                      <label htmlFor="overlay-toggle" className="font-black text-gray-900 text-lg cursor-pointer flex items-center gap-2">
+                        <Icon name="Check" size={22} className="text-green-600" />
+                        Включить затемнение
+                      </label>
+                    </div>
+
+                    <div className="space-y-3 p-5 bg-white rounded-2xl border-2 border-gray-200">
+                      <div className="flex items-center justify-between">
+                        <label className="font-black text-gray-900 text-lg">Заголовок</label>
+                        <input
+                          type="checkbox"
+                          checked={showTitle}
+                          onChange={(e) => setShowTitle(e.target.checked)}
+                          className="w-6 h-6 accent-green-600 cursor-pointer"
+                          id="title-toggle"
+                        />
                       </div>
-                    )}
+                      <input
+                        type="text"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        disabled={!showTitle}
+                        placeholder="Введите заголовок"
+                        className="w-full px-5 py-4 border-3 border-gray-300 rounded-xl focus:border-green-500 outline-none disabled:bg-gray-100 disabled:opacity-50 text-base font-semibold transition-all"
+                      />
+                    </div>
+
+                    <div className="space-y-3 p-5 bg-white rounded-2xl border-2 border-gray-200">
+                      <div className="flex items-center justify-between">
+                        <label className="font-black text-gray-900 text-lg">Описание</label>
+                        <input
+                          type="checkbox"
+                          checked={showDescription}
+                          onChange={(e) => setShowDescription(e.target.checked)}
+                          className="w-6 h-6 accent-green-600 cursor-pointer"
+                          id="desc-toggle"
+                        />
+                      </div>
+                      <textarea
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        disabled={!showDescription}
+                        placeholder="Введите описание"
+                        rows={5}
+                        className="w-full px-5 py-4 border-3 border-gray-300 rounded-xl focus:border-green-500 outline-none resize-none disabled:bg-gray-100 disabled:opacity-50 text-base font-medium transition-all"
+                      />
+                    </div>
+
+                    <div className="space-y-3 p-5 bg-white rounded-2xl border-2 border-gray-200">
+                      <div className="flex items-center justify-between">
+                        <label className="font-black text-gray-900 text-lg">Кнопка</label>
+                        <input
+                          type="checkbox"
+                          checked={showButton}
+                          onChange={(e) => setShowButton(e.target.checked)}
+                          className="w-6 h-6 accent-green-600 cursor-pointer"
+                          id="button-toggle"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        value={editButtonText}
+                        onChange={(e) => setEditButtonText(e.target.value)}
+                        disabled={!showButton}
+                        placeholder="Текст на кнопке (например: Заказать)"
+                        className="w-full px-5 py-4 border-3 border-gray-300 rounded-xl focus:border-green-500 outline-none disabled:bg-gray-100 disabled:opacity-50 text-base font-semibold transition-all"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="flex items-center gap-3 p-4 bg-green-50 rounded-xl">
-                    <input
-                      type="checkbox"
-                      checked={editOverlayEnabled}
-                      onChange={(e) => setEditOverlayEnabled(e.target.checked)}
-                      className="w-5 h-5 accent-green-600"
-                    />
-                    <label className="font-bold text-gray-900">Включить затемнение</label>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="font-bold text-gray-900">Заголовок</label>
-                      <input
-                        type="checkbox"
-                        checked={showTitle}
-                        onChange={(e) => setShowTitle(e.target.checked)}
-                        className="w-4 h-4 accent-green-600"
-                      />
-                    </div>
-                    <input
-                      type="text"
-                      value={editTitle}
-                      onChange={(e) => setEditTitle(e.target.value)}
-                      disabled={!showTitle}
-                      placeholder="Введите заголовок"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 outline-none disabled:bg-gray-100"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="font-bold text-gray-900">Описание</label>
-                      <input
-                        type="checkbox"
-                        checked={showDescription}
-                        onChange={(e) => setShowDescription(e.target.checked)}
-                        className="w-4 h-4 accent-green-600"
-                      />
-                    </div>
-                    <textarea
-                      value={editDescription}
-                      onChange={(e) => setEditDescription(e.target.value)}
-                      disabled={!showDescription}
-                      placeholder="Введите описание"
-                      rows={4}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 outline-none resize-none disabled:bg-gray-100"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="font-bold text-gray-900">Кнопка</label>
-                      <input
-                        type="checkbox"
-                        checked={showButton}
-                        onChange={(e) => setShowButton(e.target.checked)}
-                        className="w-4 h-4 accent-green-600"
-                      />
-                    </div>
-                    <input
-                      type="text"
-                      value={editButtonText}
-                      onChange={(e) => setEditButtonText(e.target.value)}
-                      disabled={!showButton}
-                      placeholder="Текст на кнопке (например: Заказать)"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 outline-none disabled:bg-gray-100"
-                    />
-                  </div>
-
-                  <Button
-                    onClick={regenerateWithOverlay}
-                    disabled={regenerating}
-                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-lg py-6 font-black"
-                  >
-                    {regenerating ? (
-                      <>
-                        <Icon name="Loader2" className="mr-2 animate-spin" size={20} />
-                        Применяем изменения...
-                      </>
-                    ) : (
-                      <>
-                        <Icon name="Sparkles" className="mr-2" size={20} />
-                        Применить и сохранить
-                      </>
-                    )}
-                  </Button>
-                </div>
+                <Button
+                  onClick={regenerateWithOverlay}
+                  disabled={regenerating}
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-xl py-8 font-black shadow-2xl rounded-2xl transition-all"
+                >
+                  {regenerating ? (
+                    <>
+                      <Icon name="Loader2" className="mr-3 animate-spin" size={24} />
+                      Применяем изменения...
+                    </>
+                  ) : (
+                    <>
+                      <Icon name="Sparkles" className="mr-3" size={24} />
+                      Применить и сохранить
+                    </>
+                  )}
+                </Button>
               </div>
             </CardContent>
           </Card>
