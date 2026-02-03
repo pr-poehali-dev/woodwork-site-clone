@@ -58,14 +58,14 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
 
         proxy_url = os.environ.get('GEMINI_PROXY_URL', '').strip()
         
-        gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent"
+        gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent"
         
         payload = {
             "contents": [{
                 "parts": [{"text": prompt}]
             }],
             "generationConfig": {
-                "response_modalities": ["Text", "Image"]
+                "responseModalities": ["TEXT", "IMAGE"]
             }
         }
 
