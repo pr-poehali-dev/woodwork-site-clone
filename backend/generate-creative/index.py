@@ -55,8 +55,18 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                 'body': json.dumps({'error': 'GEMINI_API_KEY not configured'})
             }
 
+        # Проверяем наличие прокси
+        proxy_url = os.environ.get('GEMINI_PROXY_URL', '').strip()
+        
         # Вызов Gemini API для генерации изображения
-        gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:generate?key={gemini_key}"
+        if proxy_url:
+            # Используем прокси - добавляем http:// если не указано
+            if not proxy_url.startswith('http'):
+                proxy_url = f"http://{proxy_url}"
+            gemini_url = f"{proxy_url}/v1beta/models/imagen-3.0-generate-001:generate?key={gemini_key}"
+        else:
+            # Прямой доступ
+            gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:generate?key={gemini_key}"
         
         payload = {
             "prompt": prompt,
