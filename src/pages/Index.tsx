@@ -140,48 +140,62 @@ const Index = () => {
   };
 
   const resizeImageToFormat = async (imageUrl: string, targetWidth: number, targetHeight: number): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
-        const ctx = canvas.getContext('2d');
+    try {
+      const response = await fetch(imageUrl, { mode: 'cors' });
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+
+      return new Promise((resolve, reject) => {
+        const img = new Image();
         
-        if (!ctx) {
-          reject(new Error('Canvas not supported'));
-          return;
-        }
-
-        const sourceAspect = img.width / img.height;
-        const targetAspect = targetWidth / targetHeight;
-
-        let sx = 0, sy = 0, sWidth = img.width, sHeight = img.height;
-
-        if (sourceAspect > targetAspect) {
-          sWidth = img.height * targetAspect;
-          sx = (img.width - sWidth) / 2;
-        } else {
-          sHeight = img.width / targetAspect;
-          sy = (img.height - sHeight) / 2;
-        }
-
-        ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetWidth, targetHeight);
-
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            reject(new Error('Failed to create blob'));
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = targetWidth;
+          canvas.height = targetHeight;
+          const ctx = canvas.getContext('2d');
+          
+          if (!ctx) {
+            URL.revokeObjectURL(objectUrl);
+            reject(new Error('Canvas not supported'));
             return;
           }
-          resolve(URL.createObjectURL(blob));
-        }, 'image/jpeg', 0.95);
-      };
 
-      img.onerror = () => reject(new Error('Failed to load image'));
-      img.src = imageUrl;
-    });
+          const sourceAspect = img.width / img.height;
+          const targetAspect = targetWidth / targetHeight;
+
+          let sx = 0, sy = 0, sWidth = img.width, sHeight = img.height;
+
+          if (sourceAspect > targetAspect) {
+            sWidth = img.height * targetAspect;
+            sx = (img.width - sWidth) / 2;
+          } else {
+            sHeight = img.width / targetAspect;
+            sy = (img.height - sHeight) / 2;
+          }
+
+          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetWidth, targetHeight);
+          URL.revokeObjectURL(objectUrl);
+
+          canvas.toBlob((resizedBlob) => {
+            if (!resizedBlob) {
+              reject(new Error('Failed to create blob'));
+              return;
+            }
+            resolve(URL.createObjectURL(resizedBlob));
+          }, 'image/jpeg', 0.95);
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          reject(new Error('Failed to load image'));
+        };
+        
+        img.src = objectUrl;
+      });
+    } catch (error) {
+      console.error('Resize error:', error);
+      return imageUrl;
+    }
   };
 
   const downloadImage = async (url: string, index: number) => {
