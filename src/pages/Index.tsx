@@ -147,17 +147,17 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-red-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
       <header className="border-b bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-red-600 to-yellow-500 rounded-2xl flex items-center justify-center shadow-xl">
+              <div className="w-14 h-14 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl">
                 <Icon name="Sparkles" className="text-white" size={28} />
               </div>
               <div>
                 <h1 className="text-3xl font-black text-gray-900">DirectKit</h1>
-                <p className="text-sm text-red-600 font-bold">Креативы для Яндекс.Директ</p>
+                <p className="text-sm text-green-600 font-bold">Креативы для Яндекс.Директ</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -181,7 +181,7 @@ const Index = () => {
             </p>
             <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-2">
-                <Icon name="Zap" size={18} className="text-yellow-500" />
+                <Icon name="Zap" size={18} className="text-green-500" />
                 <span>Мгновенная генерация</span>
               </div>
               <div className="flex items-center gap-2">
@@ -189,18 +189,18 @@ const Index = () => {
                 <span>Без ограничений</span>
               </div>
               <div className="flex items-center gap-2">
-                <Icon name="Palette" size={18} className="text-purple-500" />
+                <Icon name="Palette" size={18} className="text-green-500" />
                 <span>9 готовых шаблонов</span>
               </div>
             </div>
           </div>
 
-          <Card className="border-4 border-red-100 shadow-2xl mb-16">
+          <Card className="border-4 border-green-100 shadow-2xl mb-16">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div>
                   <label className="text-lg font-black text-gray-900 mb-4 block flex items-center gap-2">
-                    <Icon name="Pencil" size={20} className="text-red-600" />
+                    <Icon name="Pencil" size={20} className="text-green-600" />
                     Опишите креатив для рекламы
                   </label>
                   <textarea
@@ -208,13 +208,13 @@ const Index = () => {
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder="Например: Счастливая девушка с кофе в руках на фоне окна, утренний солнечный свет, современная квартира, теплая атмосфера"
                     rows={4}
-                    className="w-full px-6 py-5 border-3 border-gray-200 rounded-2xl focus:border-red-500 outline-none text-lg resize-none"
+                    className="w-full px-6 py-5 border-3 border-gray-200 rounded-2xl focus:border-green-500 outline-none text-lg resize-none"
                   />
                 </div>
 
                 <div>
                   <label className="text-lg font-black text-gray-900 mb-4 block flex items-center gap-2">
-                    <Icon name="Crop" size={20} className="text-red-600" />
+                    <Icon name="Crop" size={20} className="text-green-600" />
                     Формат РСЯ (все размеры Директа)
                   </label>
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
@@ -224,8 +224,8 @@ const Index = () => {
                         onClick={() => setSelectedFormat(format)}
                         className={`p-4 border-2 rounded-xl transition-all text-center ${
                           selectedFormat.label === format.label
-                            ? 'border-red-600 bg-red-50 shadow-lg'
-                            : 'border-gray-200 hover:border-red-300 hover:bg-red-50/50'
+                            ? 'border-green-600 bg-green-50 shadow-lg'
+                            : 'border-gray-200 hover:border-green-300 hover:bg-green-50/50'
                         }`}
                       >
                         <div className="text-sm font-black text-gray-900">{format.label}</div>
@@ -238,7 +238,7 @@ const Index = () => {
                 <Button
                   onClick={() => generateImage()}
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-red-600 to-yellow-500 hover:from-red-700 hover:to-yellow-600 text-white text-xl py-8 font-black shadow-2xl"
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-xl py-8 font-black shadow-2xl"
                 >
                   {loading ? (
                     <>
@@ -265,7 +265,7 @@ const Index = () => {
               {templates.map((template, index) => (
                 <Card
                   key={index}
-                  className="border-3 hover:border-red-500 transition-all cursor-pointer group hover:shadow-xl"
+                  className="border-3 hover:border-green-500 transition-all cursor-pointer group hover:shadow-xl"
                   onClick={() => {
                     setPrompt(template.prompt);
                     generateImage(template.prompt);
@@ -273,8 +273,8 @@ const Index = () => {
                 >
                   <CardContent className="p-7">
                     <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 bg-gradient-to-br from-red-100 to-yellow-100 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                        <Icon name={template.icon} className="text-red-600" size={28} />
+                      <div className="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <Icon name={template.icon} className="text-green-600" size={28} />
                       </div>
                       <div>
                         <h4 className="font-black text-gray-900 mb-2 text-lg">{template.title}</h4>
@@ -297,7 +297,7 @@ const Index = () => {
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {generatedImages.map((image, index) => (
-                  <Card key={index} className="overflow-hidden border-3 border-gray-200 hover:border-red-500 transition-all hover:shadow-2xl group">
+                  <Card key={index} className="overflow-hidden border-3 border-gray-200 hover:border-green-500 transition-all hover:shadow-2xl group">
                     <div className="relative aspect-square overflow-hidden bg-gray-100">
                       <img
                         src={image.url}
@@ -312,7 +312,7 @@ const Index = () => {
                       <div className="flex gap-3">
                         <Button
                           onClick={() => downloadImage(image.url, index)}
-                          className="flex-1 bg-gradient-to-r from-red-600 to-yellow-500 hover:from-red-700 hover:to-yellow-600 font-bold"
+                          className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 font-bold"
                         >
                           <Icon name="Download" className="mr-2" size={18} />
                           Скачать
@@ -320,7 +320,7 @@ const Index = () => {
                         <Button
                           variant="outline"
                           onClick={() => setPrompt(image.prompt)}
-                          className="border-3 border-red-600 text-red-600 hover:bg-red-50 font-bold"
+                          className="border-3 border-green-600 text-green-600 hover:bg-green-50 font-bold"
                         >
                           <Icon name="Copy" size={18} />
                         </Button>
@@ -334,7 +334,7 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="py-12 bg-gradient-to-r from-red-600 to-yellow-500 text-white">
+      <footer className="py-12 bg-gradient-to-r from-green-600 to-emerald-600 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
