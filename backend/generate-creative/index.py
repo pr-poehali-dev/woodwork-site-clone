@@ -45,53 +45,26 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                 'body': json.dumps({'error': 'Prompt is required'})
             }
 
-        gemini_key = os.environ.get('GEMINI_API_KEY')
-        if not gemini_key:
-            return {
-                'statusCode': 500,
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps({'error': 'GEMINI_API_KEY not configured'})
-            }
-
-        # Проверяем наличие прокси
-        proxy_url = os.environ.get('GEMINI_PROXY_URL', '').strip()
+        # Используем Pollinations.ai - бесплатный API для генерации изображений
+        from urllib.parse import quote
         
-        # ПРАВИЛЬНЫЙ URL для Gemini 2.0 Flash Experimental Image Generation
-        gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent"
+        # Определяем размеры по aspect ratio
+        sizes = {
+            '1:1': (1024, 1024),
+            '9:16': (768, 1344),
+            '16:9': (1344, 768)
+        }
+        width, height = sizes.get(aspect_ratio, (1024, 1024))
         
-        payload = {
-            "contents": [{
-                "parts": [{
-                    "text": prompt
-                }]
-            }]
-        }
-
-        # Настройка прокси для requests
-        proxies = None
-        if proxy_url:
-            if not proxy_url.startswith('http'):
-                proxy_url = f"http://{proxy_url}"
-            proxies = {
-                'http': proxy_url,
-                'https': proxy_url
-            }
-
-        headers = {
-            'Content-Type': 'application/json',
-            'x-goog-api-key': gemini_key
-        }
-
-        response = requests.post(
-            gemini_url,
-            headers=headers,
-            json=payload,
-            proxies=proxies,
-            timeout=60
-        )
+        # Формируем безопасный URL-encoded промпт
+        safe_prompt = quote(prompt)
+        seed = uuid.uuid4().int % 1000000
+        
+        # URL для генерации через Pollinations.ai
+        image_url = f"https://image.pollinations.ai/prompt/{safe_prompt}?width={width}&height={height}&seed={seed}&nologo=true&enhance=true&model=flux"
+        
+        # Скачиваем изображение
+        response = requests.get(image_url, timeout=60)
         
         if response.status_code != 200:
             return {
@@ -102,67 +75,44 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                 },
                 'body': json.dumps({
                     'error': 'Failed to generate image',
-                    'status': response.status_code,
-                    'details': response.text[:500]
+                    'status': response.status_code
                 })
             }
-
-        result = response.json()
         
-        # Извлекаем base64 изображение из ответа Gemini 2.5 Flash Image
-        if 'candidates' in result and len(result['candidates']) > 0:
-            candidate = result['candidates'][0]
-            if 'content' in candidate and 'parts' in candidate['content']:
-                for part in candidate['content']['parts']:
-                    if 'inlineData' in part:
-                        image_data = part['inlineData']['data']
-                        
-                        # Сохраняем в S3
-                        import boto3
-                        
-                        s3 = boto3.client('s3',
-                            endpoint_url='https://bucket.poehali.dev',
-                            aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-                            aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
-                        )
+        # Сохраняем в S3
+        import boto3
+        
+        s3 = boto3.client('s3',
+            endpoint_url='https://bucket.poehali.dev',
+            aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+            aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
+        )
 
-                        # Декодируем base64
-                        image_bytes = base64.b64decode(image_data)
-                        
-                        # Генерируем уникальное имя файла
-                        file_name = f"creatives/{uuid.uuid4()}.jpg"
-                        
-                        # Загружаем в S3
-                        s3.put_object(
-                            Bucket='files',
-                            Key=file_name,
-                            Body=image_bytes,
-                            ContentType='image/jpeg'
-                        )
-                        
-                        # Формируем CDN URL
-                        cdn_url = f"https://cdn.poehali.dev/projects/{os.environ['AWS_ACCESS_KEY_ID']}/bucket/{file_name}"
-                        
-                        return {
-                            'statusCode': 200,
-                            'headers': {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                            'body': json.dumps({
-                                'imageUrl': cdn_url,
-                                'prompt': prompt,
-                                'aspectRatio': aspect_ratio
-                            })
-                        }
+        # Генерируем уникальное имя файла
+        file_name = f"creatives/{uuid.uuid4()}.jpg"
+        
+        # Загружаем в S3
+        s3.put_object(
+            Bucket='files',
+            Key=file_name,
+            Body=response.content,
+            ContentType='image/jpeg'
+        )
+        
+        # Формируем CDN URL
+        cdn_url = f"https://cdn.poehali.dev/projects/{os.environ['AWS_ACCESS_KEY_ID']}/bucket/{file_name}"
         
         return {
-            'statusCode': 500,
+            'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps({'error': 'No image in response', 'response': str(result)[:500]})
+            'body': json.dumps({
+                'imageUrl': cdn_url,
+                'prompt': prompt,
+                'aspectRatio': aspect_ratio
+            })
         }
 
     except Exception as e:
