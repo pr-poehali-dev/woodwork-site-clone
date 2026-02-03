@@ -160,15 +160,28 @@ const Index = () => {
             return;
           }
 
-          const scale = Math.max(targetWidth / img.width, targetHeight / img.height);
+          const imgRatio = img.width / img.height;
+          const targetRatio = targetWidth / targetHeight;
           
-          const scaledWidth = img.width * scale;
-          const scaledHeight = img.height * scale;
-          
-          const offsetX = (targetWidth - scaledWidth) / 2;
-          const offsetY = (targetHeight - scaledHeight) / 2;
+          let drawWidth = img.width;
+          let drawHeight = img.height;
+          let sourceX = 0;
+          let sourceY = 0;
 
-          ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
+          if (imgRatio > targetRatio) {
+            drawWidth = img.height * targetRatio;
+            sourceX = (img.width - drawWidth) / 2;
+          } else {
+            drawHeight = img.width / targetRatio;
+            sourceY = (img.height - drawHeight) / 2;
+          }
+
+          ctx.drawImage(
+            img,
+            sourceX, sourceY, drawWidth, drawHeight,
+            0, 0, targetWidth, targetHeight
+          );
+          
           URL.revokeObjectURL(objectUrl);
 
           canvas.toBlob((resizedBlob) => {

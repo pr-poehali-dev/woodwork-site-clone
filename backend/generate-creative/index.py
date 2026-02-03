@@ -61,12 +61,23 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
         
         gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent"
         
+        allowed_ratios = {
+            "1:1": 1.0, "2:3": 0.667, "3:2": 1.5, "3:4": 0.75, "4:3": 1.333,
+            "4:5": 0.8, "5:4": 1.25, "9:16": 0.5625, "16:9": 1.778, "21:9": 2.333
+        }
+        
+        target_ratio = width / height
+        closest_ratio = min(allowed_ratios.items(), key=lambda x: abs(x[1] - target_ratio))[0]
+        
         payload = {
             "contents": [{
                 "parts": [{"text": prompt}]
             }],
             "generationConfig": {
-                "responseModalities": ["TEXT", "IMAGE"]
+                "responseModalities": ["TEXT", "IMAGE"],
+                "imageConfig": {
+                    "aspectRatio": closest_ratio
+                }
             }
         }
 
