@@ -33,7 +33,8 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
     try:
         body = json.loads(event.get('body', '{}'))
         prompt = body.get('prompt', '')
-        aspect_ratio = body.get('aspectRatio', '1:1')
+        width = body.get('width', 1024)
+        height = body.get('height', 1024)
 
         if not prompt:
             return {
@@ -112,7 +113,7 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                     return {
                         'statusCode': 200,
                         'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                        'body': json.dumps({'imageUrl': cdn_url, 'prompt': prompt, 'aspectRatio': aspect_ratio})
+                        'body': json.dumps({'imageUrl': cdn_url, 'prompt': prompt, 'width': width, 'height': height})
                     }
         
         return {

@@ -58,13 +58,24 @@ const Index = () => {
     }
   ];
 
-  const aspectRatios = [
-    { label: "Квадрат 1:1", value: "1:1", icon: "Square", desc: "Для постов" },
-    { label: "Сторис 9:16", value: "9:16", icon: "Smartphone", desc: "Вертикально" },
-    { label: "Баннер 16:9", value: "16:9", icon: "Monitor", desc: "Горизонтально" }
+  const directFormats = [
+    { label: "240×400", width: 240, height: 400, category: "Вертикальные" },
+    { label: "300×250", width: 300, height: 250, category: "Средние" },
+    { label: "300×500", width: 300, height: 500, category: "Вертикальные" },
+    { label: "300×600", width: 300, height: 600, category: "Вертикальные" },
+    { label: "320×50", width: 320, height: 50, category: "Мобильные баннеры" },
+    { label: "320×100", width: 320, height: 100, category: "Мобильные баннеры" },
+    { label: "320×480", width: 320, height: 480, category: "Мобильные" },
+    { label: "336×280", width: 336, height: 280, category: "Средние" },
+    { label: "480×320", width: 480, height: 320, category: "Горизонтальные" },
+    { label: "728×90", width: 728, height: 90, category: "Баннеры" },
+    { label: "160×600", width: 160, height: 600, category: "Небоскрёбы" },
+    { label: "240×600", width: 240, height: 600, category: "Небоскрёбы" },
+    { label: "970×250", width: 970, height: 250, category: "Широкие" },
+    { label: "1000×120", width: 1000, height: 120, category: "Широкие баннеры" }
   ];
 
-  const [selectedRatio, setSelectedRatio] = useState("1:1");
+  const [selectedFormat, setSelectedFormat] = useState(directFormats[0]);
 
   const generateImage = async (customPrompt?: string) => {
     const finalPrompt = customPrompt || prompt;
@@ -84,7 +95,8 @@ const Index = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           prompt: finalPrompt,
-          aspectRatio: selectedRatio
+          width: selectedFormat.width,
+          height: selectedFormat.height
         })
       });
 
@@ -203,22 +215,21 @@ const Index = () => {
                 <div>
                   <label className="text-lg font-black text-gray-900 mb-4 block flex items-center gap-2">
                     <Icon name="Crop" size={20} className="text-red-600" />
-                    Формат изображения
+                    Формат РСЯ (все размеры Директа)
                   </label>
-                  <div className="grid grid-cols-3 gap-5">
-                    {aspectRatios.map((ratio) => (
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                    {directFormats.map((format) => (
                       <button
-                        key={ratio.value}
-                        onClick={() => setSelectedRatio(ratio.value)}
-                        className={`p-6 border-3 rounded-2xl transition-all ${
-                          selectedRatio === ratio.value
-                            ? 'border-red-600 bg-red-50 shadow-lg scale-105'
+                        key={format.label}
+                        onClick={() => setSelectedFormat(format)}
+                        className={`p-4 border-2 rounded-xl transition-all text-center ${
+                          selectedFormat.label === format.label
+                            ? 'border-red-600 bg-red-50 shadow-lg'
                             : 'border-gray-200 hover:border-red-300 hover:bg-red-50/50'
                         }`}
                       >
-                        <Icon name={ratio.icon} className="mx-auto mb-3 text-red-600" size={32} />
-                        <div className="text-base font-black text-gray-900 mb-1">{ratio.label}</div>
-                        <div className="text-xs text-gray-500">{ratio.desc}</div>
+                        <div className="text-sm font-black text-gray-900">{format.label}</div>
+                        <div className="text-xs text-gray-500 mt-1">{format.category}</div>
                       </button>
                     ))}
                   </div>

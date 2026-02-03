@@ -6,13 +6,13 @@
       "path": "/",
       "body": {
         "prompt": "Happy person with coffee cup, morning sunlight, lifestyle photography",
-        "aspectRatio": "1:1"
+        "width": 300,
+        "height": 250
       },
       "expectedStatus": 200,
       "expectedBody": {
         "imageUrl": "string",
-        "prompt": "string",
-        "aspectRatio": "string"
+        "prompt": "string"
       },
       "bodyMatcher": "partial"
     },
@@ -22,7 +22,8 @@
       "path": "/",
       "body": {
         "prompt": "",
-        "aspectRatio": "1:1"
+        "width": 300,
+        "height": 250
       },
       "expectedStatus": 400,
       "expectedBody": {
