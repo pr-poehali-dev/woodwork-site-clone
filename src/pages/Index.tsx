@@ -115,15 +115,18 @@ const Index = () => {
       }
 
       const data = await response.json();
+      
+      const resizedUrl = await resizeImageToFormat(data.imageUrl, selectedFormat.width, selectedFormat.height);
+      
       setGeneratedImages(prev => [...prev, { 
-        url: data.imageUrl, 
+        url: resizedUrl, 
         prompt: finalPrompt,
         format: { width: selectedFormat.width, height: selectedFormat.height }
       }]);
       
       toast({
         title: "✨ Готово!",
-        description: "Креатив для Яндекс.Директ сгенерирован"
+        description: `Креатив ${selectedFormat.width}×${selectedFormat.height} готов`
       });
     } catch (error) {
       toast({
@@ -136,15 +139,61 @@ const Index = () => {
     }
   };
 
+  const resizeImageToFormat = async (imageUrl: string, targetWidth: number, targetHeight: number): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        const ctx = canvas.getContext('2d');
+        
+        if (!ctx) {
+          reject(new Error('Canvas not supported'));
+          return;
+        }
+
+        const sourceAspect = img.width / img.height;
+        const targetAspect = targetWidth / targetHeight;
+
+        let sx = 0, sy = 0, sWidth = img.width, sHeight = img.height;
+
+        if (sourceAspect > targetAspect) {
+          sWidth = img.height * targetAspect;
+          sx = (img.width - sWidth) / 2;
+        } else {
+          sHeight = img.width / targetAspect;
+          sy = (img.height - sHeight) / 2;
+        }
+
+        ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetWidth, targetHeight);
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error('Failed to create blob'));
+            return;
+          }
+          resolve(URL.createObjectURL(blob));
+        }, 'image/jpeg', 0.95);
+      };
+
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = imageUrl;
+    });
+  };
+
   const downloadImage = async (url: string, index: number) => {
     try {
-      const response = await fetch(url);
-      const blob = await response.blob();
       const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
+      link.href = url;
       link.download = `directkit-creative-${index + 1}.jpg`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
       link.click();
-      URL.revokeObjectURL(link.href);
+      document.body.removeChild(link);
       
       toast({
         title: "Скачано!",
