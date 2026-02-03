@@ -7,7 +7,14 @@ import { useToast } from "@/hooks/use-toast";
 const Index = () => {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
-  const [generatedImages, setGeneratedImages] = useState<Array<{url: string, prompt: string}>>([]);
+  const [generatedImages, setGeneratedImages] = useState<Array<{url: string, prompt: string, format: {width: number, height: number}}>>([]);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editOverlayEnabled, setEditOverlayEnabled] = useState(true);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [showTitle, setShowTitle] = useState(true);
+  const [showDescription, setShowDescription] = useState(true);
+  const [regenerating, setRegenerating] = useState(false);
   const { toast } = useToast();
 
   const templates = [
@@ -106,7 +113,11 @@ const Index = () => {
       }
 
       const data = await response.json();
-      setGeneratedImages(prev => [...prev, { url: data.imageUrl, prompt: finalPrompt }]);
+      setGeneratedImages(prev => [...prev, { 
+        url: data.imageUrl, 
+        prompt: finalPrompt,
+        format: { width: selectedFormat.width, height: selectedFormat.height }
+      }]);
       
       toast({
         title: "✨ Готово!",
@@ -144,6 +155,102 @@ const Index = () => {
         variant: "destructive"
       });
     }
+  };
+
+  const regenerateWithOverlay = async () => {
+    if (editingIndex === null) return;
+    
+    setRegenerating(true);
+    try {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Canvas not supported');
+
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = generatedImages[editingIndex].url;
+      });
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      ctx.drawImage(img, 0, 0);
+
+      if (editOverlayEnabled) {
+        const gradient = ctx.createLinearGradient(0, canvas.height / 2, 0, canvas.height);
+        gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.textAlign = 'center';
+        const padding = 40;
+        let yPosition = canvas.height - padding;
+
+        if (showDescription && editDescription) {
+          ctx.font = `${Math.floor(canvas.height * 0.04)}px Arial`;
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+          const descLines = wrapText(ctx, editDescription, canvas.width - padding * 2);
+          descLines.reverse().forEach(line => {
+            ctx.fillText(line, canvas.width / 2, yPosition);
+            yPosition -= Math.floor(canvas.height * 0.05);
+          });
+          yPosition -= 10;
+        }
+
+        if (showTitle && editTitle) {
+          ctx.font = `bold ${Math.floor(canvas.height * 0.06)}px Arial`;
+          ctx.fillStyle = '#ffffff';
+          const titleLines = wrapText(ctx, editTitle, canvas.width - padding * 2);
+          titleLines.reverse().forEach(line => {
+            ctx.fillText(line, canvas.width / 2, yPosition);
+            yPosition -= Math.floor(canvas.height * 0.07);
+          });
+        }
+      }
+
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        setGeneratedImages(prev => prev.map((img, idx) => 
+          idx === editingIndex ? { ...img, url } : img
+        ));
+        setEditingIndex(null);
+        toast({ title: "Готово!", description: "Креатив обновлён" });
+      }, 'image/jpeg', 0.95);
+
+    } catch (error) {
+      toast({
+        title: "Ошибка",
+        description: "Не удалось обработать изображение",
+        variant: "destructive"
+      });
+    } finally {
+      setRegenerating(false);
+    }
+  };
+
+  const wrapText = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] => {
+    const words = text.split(' ');
+    const lines: string[] = [];
+    let currentLine = words[0];
+
+    for (let i = 1; i < words.length; i++) {
+      const testLine = currentLine + ' ' + words[i];
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth) {
+        lines.push(currentLine);
+        currentLine = words[i];
+      } else {
+        currentLine = testLine;
+      }
+    }
+    lines.push(currentLine);
+    return lines;
   };
 
   return (
@@ -311,18 +418,25 @@ const Index = () => {
                     <CardContent className="p-5">
                       <div className="flex gap-3">
                         <Button
-                          onClick={() => downloadImage(image.url, index)}
+                          onClick={() => {
+                            setEditingIndex(index);
+                            setEditTitle("");
+                            setEditDescription("");
+                            setShowTitle(true);
+                            setShowDescription(true);
+                            setEditOverlayEnabled(true);
+                          }}
                           className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 font-bold"
                         >
-                          <Icon name="Download" className="mr-2" size={18} />
-                          Скачать
+                          <Icon name="Edit" className="mr-2" size={18} />
+                          Редактировать
                         </Button>
                         <Button
+                          onClick={() => downloadImage(image.url, index)}
                           variant="outline"
-                          onClick={() => setPrompt(image.prompt)}
                           className="border-3 border-green-600 text-green-600 hover:bg-green-50 font-bold"
                         >
-                          <Icon name="Copy" size={18} />
+                          <Icon name="Download" size={18} />
                         </Button>
                       </div>
                     </CardContent>
@@ -333,6 +447,120 @@ const Index = () => {
           )}
         </div>
       </section>
+
+      {editingIndex !== null && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <CardContent className="p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-black text-gray-900">Редактор креатива</h3>
+                <Button
+                  variant="ghost"
+                  onClick={() => setEditingIndex(null)}
+                  className="text-gray-500 hover:text-gray-900"
+                >
+                  <Icon name="X" size={24} />
+                </Button>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-4">Превью</h4>
+                  <div className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden">
+                    <img
+                      src={generatedImages[editingIndex].url}
+                      alt="Превью"
+                      className="w-full h-full object-cover"
+                    />
+                    {editOverlayEnabled && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end justify-center p-8 text-center">
+                        {showTitle && editTitle && (
+                          <div className="mb-4">
+                            <h3 className="text-white font-black text-2xl">{editTitle}</h3>
+                          </div>
+                        )}
+                        {showDescription && editDescription && (
+                          <p className="text-white/90 text-sm">{editDescription}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3 p-4 bg-green-50 rounded-xl">
+                    <input
+                      type="checkbox"
+                      checked={editOverlayEnabled}
+                      onChange={(e) => setEditOverlayEnabled(e.target.checked)}
+                      className="w-5 h-5 accent-green-600"
+                    />
+                    <label className="font-bold text-gray-900">Включить затемнение</label>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="font-bold text-gray-900">Заголовок</label>
+                      <input
+                        type="checkbox"
+                        checked={showTitle}
+                        onChange={(e) => setShowTitle(e.target.checked)}
+                        className="w-4 h-4 accent-green-600"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      disabled={!showTitle}
+                      placeholder="Введите заголовок"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 outline-none disabled:bg-gray-100"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="font-bold text-gray-900">Описание</label>
+                      <input
+                        type="checkbox"
+                        checked={showDescription}
+                        onChange={(e) => setShowDescription(e.target.checked)}
+                        className="w-4 h-4 accent-green-600"
+                      />
+                    </div>
+                    <textarea
+                      value={editDescription}
+                      onChange={(e) => setEditDescription(e.target.value)}
+                      disabled={!showDescription}
+                      placeholder="Введите описание"
+                      rows={4}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 outline-none resize-none disabled:bg-gray-100"
+                    />
+                  </div>
+
+                  <Button
+                    onClick={regenerateWithOverlay}
+                    disabled={regenerating}
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-lg py-6 font-black"
+                  >
+                    {regenerating ? (
+                      <>
+                        <Icon name="Loader2" className="mr-2 animate-spin" size={20} />
+                        Применяем изменения...
+                      </>
+                    ) : (
+                      <>
+                        <Icon name="Sparkles" className="mr-2" size={20} />
+                        Применить и сохранить
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       <footer className="py-12 bg-gradient-to-r from-green-600 to-emerald-600 text-white">
         <div className="container mx-auto px-4">
