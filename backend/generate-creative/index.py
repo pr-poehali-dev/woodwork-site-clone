@@ -6,7 +6,7 @@ from typing import Dict, Any
 import uuid
 
 def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
-    '''API для генерации креативов через Gemini 2.5 Flash'''
+    '''API для генерации креативов через Gemini 2.5 Flash Image'''
     method = event.get('httpMethod', 'POST')
 
     if method == 'OPTIONS':
@@ -59,22 +59,17 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
         # Проверяем наличие прокси
         proxy_url = os.environ.get('GEMINI_PROXY_URL', '').strip()
         
-        # Генерация через Pollinations API (бесплатно)
-        # Формируем безопасный URL-encoded промпт
-        from urllib.parse import quote
-        safe_prompt = quote(prompt)
+        # ПРАВИЛЬНЫЙ URL для Gemini 2.0 Flash Experimental Image Generation
+        gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent"
         
-        # Определяем размеры по aspect ratio
-        sizes = {
-            '1:1': '1024x1024',
-            '9:16': '768x1344',
-            '16:9': '1344x768'
+        payload = {
+            "contents": [{
+                "parts": [{
+                    "text": prompt
+                }]
+            }]
         }
-        size = sizes.get(aspect_ratio, '1024x1024')
-        
-        # Используем Pollinations.ai API
-        image_url = f"https://image.pollinations.ai/prompt/{safe_prompt}?width={size.split('x')[0]}&height={size.split('x')[1]}&seed={uuid.uuid4().int % 1000000}&nologo=true&enhance=true"
-        
+
         # Настройка прокси для requests
         proxies = None
         if proxy_url:
@@ -85,8 +80,18 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                 'https': proxy_url
             }
 
-        # Скачиваем изображение
-        response = requests.get(image_url, proxies=proxies, timeout=60)
+        headers = {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': gemini_key
+        }
+
+        response = requests.post(
+            gemini_url,
+            headers=headers,
+            json=payload,
+            proxies=proxies,
+            timeout=60
+        )
         
         if response.status_code != 200:
             return {
@@ -97,44 +102,67 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                 },
                 'body': json.dumps({
                     'error': 'Failed to generate image',
-                    'details': f'Status: {response.status_code}'
+                    'status': response.status_code,
+                    'details': response.text[:500]
                 })
             }
 
-        # Сохраняем в S3
-        import boto3
+        result = response.json()
         
-        s3 = boto3.client('s3',
-            endpoint_url='https://bucket.poehali.dev',
-            aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-            aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
-        )
+        # Извлекаем base64 изображение из ответа Gemini 2.5 Flash Image
+        if 'candidates' in result and len(result['candidates']) > 0:
+            candidate = result['candidates'][0]
+            if 'content' in candidate and 'parts' in candidate['content']:
+                for part in candidate['content']['parts']:
+                    if 'inlineData' in part:
+                        image_data = part['inlineData']['data']
+                        
+                        # Сохраняем в S3
+                        import boto3
+                        
+                        s3 = boto3.client('s3',
+                            endpoint_url='https://bucket.poehali.dev',
+                            aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+                            aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
+                        )
 
-        # Генерируем уникальное имя файла
-        file_name = f"creatives/{uuid.uuid4()}.jpg"
-        
-        # Загружаем в S3
-        s3.put_object(
-            Bucket='files',
-            Key=file_name,
-            Body=response.content,
-            ContentType='image/jpeg'
-        )
-        
-        # Формируем CDN URL
-        cdn_url = f"https://cdn.poehali.dev/projects/{os.environ['AWS_ACCESS_KEY_ID']}/bucket/{file_name}"
+                        # Декодируем base64
+                        image_bytes = base64.b64decode(image_data)
+                        
+                        # Генерируем уникальное имя файла
+                        file_name = f"creatives/{uuid.uuid4()}.jpg"
+                        
+                        # Загружаем в S3
+                        s3.put_object(
+                            Bucket='files',
+                            Key=file_name,
+                            Body=image_bytes,
+                            ContentType='image/jpeg'
+                        )
+                        
+                        # Формируем CDN URL
+                        cdn_url = f"https://cdn.poehali.dev/projects/{os.environ['AWS_ACCESS_KEY_ID']}/bucket/{file_name}"
+                        
+                        return {
+                            'statusCode': 200,
+                            'headers': {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                            'body': json.dumps({
+                                'imageUrl': cdn_url,
+                                'prompt': prompt,
+                                'aspectRatio': aspect_ratio
+                            })
+                        }
         
         return {
-            'statusCode': 200,
+            'statusCode': 500,
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps({
-                'imageUrl': cdn_url,
-                'prompt': prompt,
-                'aspectRatio': aspect_ratio
-            })
+            'body': json.dumps({'error': 'No image in response', 'response': str(result)[:500]})
         }
 
     except Exception as e:
