@@ -12,8 +12,10 @@ const Index = () => {
   const [editOverlayEnabled, setEditOverlayEnabled] = useState(true);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [editButtonText, setEditButtonText] = useState("");
   const [showTitle, setShowTitle] = useState(true);
   const [showDescription, setShowDescription] = useState(true);
+  const [showButton, setShowButton] = useState(true);
   const [regenerating, setRegenerating] = useState(false);
   const { toast } = useToast();
 
@@ -157,6 +159,26 @@ const Index = () => {
     }
   };
 
+  const getSmartLayout = (width: number, height: number) => {
+    const aspectRatio = width / height;
+    const isVertical = aspectRatio < 0.8;
+    const isHorizontal = aspectRatio > 1.5;
+    const isSkyscraper = height > width * 2;
+    const isSmallBanner = height < 150;
+
+    if (isSkyscraper) {
+      return { textAlign: 'center' as const, padding: 30, titleSize: 0.08, descSize: 0.045, buttonWidth: 0.7, buttonY: 0.75 };
+    } else if (isVertical) {
+      return { textAlign: 'center' as const, padding: 35, titleSize: 0.065, descSize: 0.04, buttonWidth: 0.75, buttonY: 0.78 };
+    } else if (isSmallBanner) {
+      return { textAlign: 'left' as const, padding: 20, titleSize: 0.25, descSize: 0.15, buttonWidth: 0.25, buttonY: 0.5 };
+    } else if (isHorizontal) {
+      return { textAlign: 'left' as const, padding: 40, titleSize: 0.12, descSize: 0.065, buttonWidth: 0.3, buttonY: 0.6 };
+    } else {
+      return { textAlign: 'center' as const, padding: 40, titleSize: 0.07, descSize: 0.045, buttonWidth: 0.6, buttonY: 0.75 };
+    }
+  };
+
   const regenerateWithOverlay = async () => {
     if (editingIndex === null) return;
     
@@ -177,38 +199,63 @@ const Index = () => {
 
       canvas.width = img.width;
       canvas.height = img.height;
-
       ctx.drawImage(img, 0, 0);
+
+      const layout = getSmartLayout(canvas.width, canvas.height);
 
       if (editOverlayEnabled) {
         const gradient = ctx.createLinearGradient(0, canvas.height / 2, 0, canvas.height);
         gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.85)');
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.textAlign = 'center';
-        const padding = 40;
+        ctx.textAlign = layout.textAlign;
+        const padding = layout.padding;
+        const xCenter = layout.textAlign === 'center' ? canvas.width / 2 : padding;
         let yPosition = canvas.height - padding;
 
+        if (showButton && editButtonText) {
+          const buttonWidth = canvas.width * layout.buttonWidth;
+          const buttonHeight = Math.max(canvas.height * 0.08, 30);
+          const buttonX = layout.textAlign === 'center' ? (canvas.width - buttonWidth) / 2 : padding;
+          const buttonY = canvas.height - padding - buttonHeight;
+
+          ctx.fillStyle = '#10b981';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+          ctx.shadowBlur = 10;
+          ctx.shadowOffsetY = 4;
+          roundRect(ctx, buttonX, buttonY, buttonWidth, buttonHeight, 12);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          ctx.font = `bold ${Math.floor(buttonHeight * 0.4)}px Arial`;
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.fillText(editButtonText, buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 + Math.floor(buttonHeight * 0.15));
+          
+          ctx.textAlign = layout.textAlign;
+          yPosition = buttonY - 20;
+        }
+
         if (showDescription && editDescription) {
-          ctx.font = `${Math.floor(canvas.height * 0.04)}px Arial`;
+          ctx.font = `${Math.floor(canvas.height * layout.descSize)}px Arial`;
           ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
           const descLines = wrapText(ctx, editDescription, canvas.width - padding * 2);
           descLines.reverse().forEach(line => {
-            ctx.fillText(line, canvas.width / 2, yPosition);
-            yPosition -= Math.floor(canvas.height * 0.05);
+            ctx.fillText(line, xCenter, yPosition);
+            yPosition -= Math.floor(canvas.height * (layout.descSize + 0.01));
           });
-          yPosition -= 10;
+          yPosition -= 15;
         }
 
         if (showTitle && editTitle) {
-          ctx.font = `bold ${Math.floor(canvas.height * 0.06)}px Arial`;
+          ctx.font = `bold ${Math.floor(canvas.height * layout.titleSize)}px Arial`;
           ctx.fillStyle = '#ffffff';
           const titleLines = wrapText(ctx, editTitle, canvas.width - padding * 2);
           titleLines.reverse().forEach(line => {
-            ctx.fillText(line, canvas.width / 2, yPosition);
-            yPosition -= Math.floor(canvas.height * 0.07);
+            ctx.fillText(line, xCenter, yPosition);
+            yPosition -= Math.floor(canvas.height * (layout.titleSize + 0.01));
           });
         }
       }
@@ -232,6 +279,20 @@ const Index = () => {
     } finally {
       setRegenerating(false);
     }
+  };
+
+  const roundRect = (ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number) => {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
   };
 
   const wrapText = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] => {
@@ -422,8 +483,10 @@ const Index = () => {
                             setEditingIndex(index);
                             setEditTitle("");
                             setEditDescription("");
+                            setEditButtonText("");
                             setShowTitle(true);
                             setShowDescription(true);
+                            setShowButton(true);
                             setEditOverlayEnabled(true);
                           }}
                           className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 font-bold"
@@ -473,14 +536,17 @@ const Index = () => {
                       className="w-full h-full object-cover"
                     />
                     {editOverlayEnabled && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end justify-center p-8 text-center">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end p-8 text-center">
                         {showTitle && editTitle && (
-                          <div className="mb-4">
-                            <h3 className="text-white font-black text-2xl">{editTitle}</h3>
-                          </div>
+                          <h3 className="text-white font-black text-2xl mb-2">{editTitle}</h3>
                         )}
                         {showDescription && editDescription && (
-                          <p className="text-white/90 text-sm">{editDescription}</p>
+                          <p className="text-white/90 text-sm mb-4">{editDescription}</p>
+                        )}
+                        {showButton && editButtonText && (
+                          <button className="bg-green-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg">
+                            {editButtonText}
+                          </button>
                         )}
                       </div>
                     )}
@@ -535,6 +601,26 @@ const Index = () => {
                       placeholder="Введите описание"
                       rows={4}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 outline-none resize-none disabled:bg-gray-100"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="font-bold text-gray-900">Кнопка</label>
+                      <input
+                        type="checkbox"
+                        checked={showButton}
+                        onChange={(e) => setShowButton(e.target.checked)}
+                        className="w-4 h-4 accent-green-600"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      value={editButtonText}
+                      onChange={(e) => setEditButtonText(e.target.value)}
+                      disabled={!showButton}
+                      placeholder="Текст на кнопке (например: Заказать)"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 outline-none disabled:bg-gray-100"
                     />
                   </div>
 
