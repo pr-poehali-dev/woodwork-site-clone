@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Generate creative with prompt",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "prompt": "Happy person with coffee cup, morning sunlight, lifestyle photography",
+        "aspectRatio": "1:1"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "imageUrl": "string",
+        "prompt": "string",
+        "aspectRatio": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Reject empty prompt",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "prompt": "",
+        "aspectRatio": "1:1"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

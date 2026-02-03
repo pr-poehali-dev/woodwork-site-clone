@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import PaintingService from "./pages/PaintingService";
 import SandingService from "./pages/SandingService";
 import OptiGroup from "./pages/OptiGroup";
+import DirectKit from "./pages/DirectKit";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/services/painting" element={<PaintingService />} />
           <Route path="/services/sanding" element={<SandingService />} />
           <Route path="/opti-group" element={<OptiGroup />} />
+          <Route path="/directkit" element={<DirectKit />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
